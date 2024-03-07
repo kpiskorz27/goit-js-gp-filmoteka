@@ -1,0 +1,14 @@
+:root {
+  --black: #000000;
+  --dark: #10181d;
+  --orange: #ff6b08;
+  --white: #ffffff;
+  --light_grey: #f7f7f7;
+  --red: #ff001b;
+  --dark_grey: #8c8c8c;
+}
+
+body {
+  font-family: 'Roboto';
+  margin: auto;
+}
