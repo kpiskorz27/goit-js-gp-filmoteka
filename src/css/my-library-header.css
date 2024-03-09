@@ -19,10 +19,15 @@
 }
 
 .lib-header-container {
-  background-image: url(../images/my_library/ml-header-mobile.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+    url(../images/my_library/ml-header-mobile.jpg);
   height: 230px;
+  background-size: cover;
+}
+@media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
+  .lib-header-container {
+    background-image: url(../images/my_library/ml-header-mobile@x2.jpg);
+  }
 }
 .lib-nav-container {
   padding-top: 40px;
@@ -57,7 +62,7 @@
 .library-buttons {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 20px;
   margin-top: 66px;
 }
 .library-button {
@@ -73,32 +78,59 @@
   color: var(--white);
   border: 1px solid var(--white);
   border-radius: 5px;
-  width: 129px;
-  height: 44px;
+}
+.library-button.active {
+  background-color: var(--orange);
+  border: var(--orange);
 }
 
-@media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-  .lib-header-container {
-    background-image: url(../images/my_library/ml-header-mobile@x2.jpg);
-  }
-}
 @media (min-width: 768px) {
   .lib-header-container {
-    background-image: url(../images/my_library/ml-header-tablet.jpg);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(../images/my_library/ml-header-tablet.jpg);
+    height: 219px;
   }
   @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
     .lib-header-container {
-      background-image: url(../images/my_library/ml-header-tablet@x2.jpg);
+      background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+        url(../images/my_library/ml-header-tablet@x2.jpg);
     }
+  }
+
+  .logo-text {
+    display: inline-block;
+    color: var(--white);
+    font-weight: 500;
+    font-size: 30px;
+    text-align: center;
+    color: #fff;
+    padding-left: 12px;
+  }
+  .library-buttons {
+    gap: 32px;
+  }
+  .library-button {
+    width: 152px;
+    height: 44px;
   }
 }
 @media (min-width: 1200px) {
-  .sub-container {
-    background-image: url(../images/my_library/ml-header.jpg);
+  .lib-header-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+      url(../images/my_library/ml-header.jpg);
+    height: 216px;
   }
   @media (min-device-pixel-ratio: 2), (min-resolution: 192dpi), (min-resolution: 2dppx) {
-    .sub-container {
-      background-image: url(../images/my_library/ml-header@x2.jpg);
+    .lib-header-container {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
+        url(../images/my_library/ml-header@x2.jpg);
     }
+  }
+  .library-buttons {
+    gap: 39px;
+  }
+  .library-button {
+    width: 148px;
+    height: 42px;
   }
 }
