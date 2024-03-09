@@ -8,7 +8,7 @@ async function getPopularMovies(page = 1) {
         const data = await response.json();
         return { movies: data.results, totalPages: data.total_pages };
     } catch (error) {
-        console.error('Błąd podczas pobierania danych:', error);
+        console.error('Error while fetching data:', error);
         return { movies: [], totalPages: 0 };
     }
 }
