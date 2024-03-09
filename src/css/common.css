@@ -22,3 +22,19 @@ h6,
 p {
   margin: 0;
 }
+
+@media screen and (min-width: 320px) {
+  body {
+    width: 320px;
+  }
+}
+@media screen and (min-width: 768px) {
+  body {
+    width: 768px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  body {
+    width: 1280px;
+  }
+}
