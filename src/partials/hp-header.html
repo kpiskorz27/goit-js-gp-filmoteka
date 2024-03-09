@@ -2,9 +2,13 @@
     <div class="header-container">
         <nav class="nav-container">
             <a href="./index.html" class="logo">
-                <svg class="logo-icon" width="24" height="24">
+                <div class="logo__wrap">
+                    <span class="logo__icon">
+                <svg class="nav-icon-logo logo__icon--first" width="24" height="24">
                     <use href="/src/images/icons.svg#icon-film"></use>
                 </svg>
+            </span>
+            </div>
                 <span class="logo-text">Filmoteka</span>
             </a>
             <ul class="header-list">
@@ -18,16 +22,19 @@
         </nav>
         <form name="search" class="serach-form">
             <div class="search-box">
+                <div class="block-search">
+                <label class="label">
                 <input type="text" name="serch-movie" autofocus placeholder="Movie search" class="search-input"/>
+                </label>
                 <button type="submit" class="search-button">
                     <svg class="search-icon" width="12" height="12">
                         <use href="/src/images/icons.svg#icon-search"></use>
                     </svg>
                 </button>
-            </div>
+                </div>
         </form>
         <p id="error-message" class="header-error">
             Search result not successful. Enter the correct movie name and try again.
-        </p>
-    </div>
+        </p></div>
+ </div>
 </header>
