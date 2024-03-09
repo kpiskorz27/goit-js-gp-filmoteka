@@ -23,7 +23,6 @@
     .decor {
       width: 768px;
       padding: 40px 32px 44px 32px;
-  
       background-image: url('../images/homepage/hp-header-tablet.jpg');
       background-repeat: no-repeat;
       background-position: center;
@@ -60,12 +59,10 @@
 .hp-header {
   @media screen and (min-width: 768px) {
     display: flex;
-
     width: 704px;
   }
   @media screen and (min-width: 1280px) {
     display: flex;
-
     width: 1216px;
   }
 }
@@ -121,7 +118,6 @@
       display: flex;
       align-items: center;
       text-align: center;
-  
       color: #ffffff;
       margin-left: 10px;
     }
@@ -133,11 +129,9 @@
       display: flex;
       align-items: center;
       text-align: center;
-  
       color: #ffffff;
     }
   }
-
 
 .logo__wrap {
     position: relative;
@@ -176,10 +170,11 @@
     margin-left: 10px;
 }
 
-
 .header-list {
     display: flex;
     gap: 10px;
+    list-style: none;
+
     @media screen and (min-width: 320px) {
       gap: 40px;
     }
@@ -188,7 +183,7 @@
     @media screen and (min-width: 1280px) {
     }
   }
-  
+
   .header-home {
     position: relative;
     text-decoration: none;
@@ -200,10 +195,29 @@
     align-items: center;
     text-align: center;
     text-transform: uppercase;
-  
     color: #ffffff;
-  
     letter-spacing: normal;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        transform: translateY(1px);
+        display: block;
+        width: 100%;
+        height: 3px;
+        border: none;
+        background-color: #ff001b;
+    
+        transition: width 0.2s ease-in-out;
+      }
+
+    &:hover::after,
+    &:focus::after {
+    width: 0;
+  }
+
   
     @media screen and (min-width: 768px) {
     }
@@ -211,19 +225,6 @@
     }
   }
   
-  .header-home:hover::before,
-  .header-home:focus::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 3px;
-    position: absolute;
-    background-color: #ff001b;
-    bottom: -4px;
-  }
-  
-  /*--------------------------search-------------------*/
-
 .search-box {
   display: flex;
   flex-direction: column;
@@ -251,27 +252,18 @@
     width: 394px;
   }
 }
-/*
-.search {
-  @media screen and (min-width: 768px) {
-  }
-  @media screen and (min-width: 1280px) {
-  }
-} */
+
 .search-input {
   background-color: transparent;
-
+  color: #ffffff;
   border-width: 0;
   border-bottom: 0.5px solid #ffffff;
-
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.14;
   display: flex;
   align-items: center;
-  color: #ffffff;
-
   transition: border-bottom-color 500ms linear;
 
   &:hover {
@@ -294,7 +286,6 @@
     line-height: 1.14;
     display: flex;
     align-items: center;
-
     color: #ffffff;
   }
   @media screen and (min-width: 1280px) {
@@ -305,11 +296,10 @@
     line-height: 1.14;
     display: flex;
     align-items: center;
-
     color: #ffffff;
   }
 }
-.hsearch-input::placeholder {
+.search-input::placeholder {
   color: inherit;
 }
 .search-icon {
@@ -328,6 +318,7 @@
   background-color: transparent;
   right: 0%;
   bottom: 0%;
+
   @media screen and (min-width: 320px) {
     right: 0%;
     bottom: 0%;
@@ -360,31 +351,26 @@
   font-size: 14px;
   line-height: 1.14;
   align-items: center;
-
   color: #ff001b;
   margin-top: 16px;
+
   @media screen and (min-width: 768px) {
     display: flex;
-
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 1.14;
     align-items: center;
     text-align: center;
-
     margin-top: 20px;
-
     color: #ff001b;
-
     top: 172px;
     overflow: visible;
-
     letter-spacing: normal;
   }
+
   @media screen and (min-width: 1280px) {
     letter-spacing: normal;
-
     top: 172px;
   }
 }
