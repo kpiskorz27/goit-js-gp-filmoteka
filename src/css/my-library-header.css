@@ -115,7 +115,7 @@
     height: 44px;
   }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1280px) {
   .lib-header-container {
     background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
       url(../images/my_library/ml-header.jpg);
