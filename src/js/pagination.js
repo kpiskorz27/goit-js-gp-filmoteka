@@ -84,21 +84,21 @@ function renderPagination(totalPages, currentPage) {
     const paginationContainer = document.querySelector('.pagination');
     paginationContainer.innerHTML = '';
 
-    const visiblePages = 7;
-    let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+    const visiblePages = 5;
+    const maxButtonsToShow = 1000;
+    const increment = 15;
+
+    let startPage = 1;
     let endPage = Math.min(startPage + visiblePages - 1, totalPages);
 
-    if (endPage - startPage + 1 < visiblePages) {
-        startPage = Math.max(1, endPage - visiblePages + 1);
-    }
-
-    if (currentPage <= Math.floor(visiblePages / 2) + 1) {
-        endPage = Math.min(visiblePages, totalPages);
-    }
-
-    if (currentPage >= totalPages - Math.floor(visiblePages / 2)) {
-        startPage = Math.max(totalPages - visiblePages + 1, 1);
-        endPage = totalPages;
+    if (totalPages > visiblePages) {
+        const half = Math.floor(visiblePages / 2);
+        startPage = Math.max(currentPage - half, 1);
+        endPage = startPage + visiblePages - 1;
+        if (endPage >= maxButtonsToShow) {
+            endPage = maxButtonsToShow;
+            startPage = Math.max(endPage - visiblePages + 1, 1);
+        }
     }
 
     const firstPageButton = document.createElement('button');
@@ -128,24 +128,20 @@ function renderPagination(totalPages, currentPage) {
         paginationContainer.appendChild(pageButton);
     }
 
-    if (totalPages > 20 && currentPage <= Math.floor(visiblePages / 2) + 1) {
+    if (endPage < totalPages) {
         const ellipsis2 = document.createElement('span');
         ellipsis2.textContent = '...';
         paginationContainer.appendChild(ellipsis2);
 
+        const lastPage = Math.min(endPage + increment, totalPages);
+
         const lastPageButton = document.createElement('button');
-        lastPageButton.textContent = '20';
+        lastPageButton.textContent = lastPage;
         lastPageButton.classList.add('page-button');
         lastPageButton.addEventListener('click', () => {
-            loadMoviesPage(20);
+            loadMoviesPage(lastPage);
         });
         paginationContainer.appendChild(lastPageButton);
-    }
-
-    if (currentPage >= totalPages - Math.floor(visiblePages / 2) && totalPages > 20) {
-        const ellipsis3 = document.createElement('span');
-        ellipsis3.textContent = '...';
-        paginationContainer.appendChild(ellipsis3);
     }
 
     const lastPageButton = document.createElement('button');
@@ -154,5 +150,6 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.addEventListener('click', () => {
         loadMoviesPage(totalPages);
     });
+
     paginationContainer.appendChild(lastPageButton);
 }
