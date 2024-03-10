@@ -1,0 +1,37 @@
+<!--div class movie-backdrop start-->
+<div class="movie-backdrop is-hidden" data-modal>
+  <div class="movie-modal">
+    <button type="button" class="modal-close-btn" data-modal-close>
+      <svg class="modal-close-icon" width="16" height="16">
+        <use href="/src/images/icons.svg#icon-close"></use>
+      </svg>
+    </button>
+
+    <div class="movie-image"></div>
+    <div class="movie-container">
+      <h2 class="movie-title">MOVIE TITLE</h2>
+      <!--extra div for descr and values together-->
+      <div class="movie-details">
+        <div class="movie-description">
+          <p class="movie-descr">Vote / Votes</p>
+          <p class="movie-descr">Popularity</p>
+          <p class="movie-descr">Original Title</p>
+          <p class="movie-descr">Genre</p>
+        </div>
+        <!--extra div for values from API-->
+        <div class="movie-descr-values"></div>
+      </div>
+      <div class="movie-about">
+        <!--word ABOUT is constant -->
+        <h3>ABOUT</h3>
+        <!--add about-paragraph-->
+        <div class="movie-about-par"></div>
+      </div>
+      <div class="modal-buttons">
+        <button class="watched-button" type="button">ADD TO WATCHED</button>
+        <button class="queue-button" type="button">ADD TO QUEUE</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--div class movie-backdrop end-->
