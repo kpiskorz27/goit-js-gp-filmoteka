@@ -41,6 +41,14 @@
     display: flex;
     width: 280px;
     height: 408px;
+    transition: 0.5s ease-out;
+
+}
+.movie-item img:hover{
+    transform: scale(1.02);
+}
+.movie-item img:hover::after{
+    transition: all;
 }
 
 .pagination{
