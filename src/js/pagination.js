@@ -103,7 +103,7 @@ function renderPagination(totalPages, currentPage) {
 
     const firstPageButton = document.createElement('button');
     firstPageButton.textContent = '<<';
-    firstPageButton.classList.add('page-button');
+    firstPageButton.classList.add('page-button', 'first-button');
     firstPageButton.addEventListener('click', () => {
         loadMoviesPage(1);
     });
@@ -150,7 +150,7 @@ function renderPagination(totalPages, currentPage) {
 
     const lastPageButton = document.createElement('button');
     lastPageButton.textContent = '>>';
-    lastPageButton.classList.add('page-button');
+    lastPageButton.classList.add('page-button','last-button');
     lastPageButton.addEventListener('click', () => {
         loadMoviesPage(totalPages);
     });
