@@ -370,7 +370,7 @@
     overflow: visible;
     letter-spacing: normal;
   }
-
+  
   @media screen and (min-width: 1280px) {
     letter-spacing: normal;
     top: 172px;
