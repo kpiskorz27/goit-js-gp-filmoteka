@@ -2,7 +2,7 @@
   "name": "parcel-project-template",
   "version": "1.1.0",
   "description": "",
-  "homepage": "https://github.com/kpiskorz.github.io/goit-js-gp-filmoteka",
+  "homepage": "https://kpiskorz27.github.io/goit-js-gp-filmoteka",
   "scripts": {
     "dev": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /goit-js-gp-filmoteka/"
