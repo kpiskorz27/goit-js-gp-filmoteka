@@ -148,7 +148,8 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.textContent = '>>';
     lastPageButton.classList.add('page-button');
     lastPageButton.addEventListener('click', () => {
-        loadMoviesPage(totalPages);
+        const nextPage = Math.min(currentPage + 1, totalPages);
+        loadMoviesPage(nextPage);
     });
 
     paginationContainer.appendChild(lastPageButton);
