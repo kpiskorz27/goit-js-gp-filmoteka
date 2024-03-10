@@ -353,6 +353,8 @@
   align-items: center;
   color: #ff001b;
   margin-top: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 
   @media screen and (min-width: 768px) {
     display: flex;

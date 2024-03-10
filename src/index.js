@@ -5,3 +5,4 @@ import './js/modal-one-film';
 import './js/pagination';
 import './js/queue-gallery';
 import './js/watched-gallery';
+import './js/search-error';
