@@ -30,40 +30,42 @@ async function getPopularMovies(page = 1) {
     }
 }
 
-function displayMovies(movies) {
+export function renderMovieCard(movie) {
+    const movieItem = document.createElement('div');
+    movieItem.classList.add('movie-item');
+
+    const moviePoster = document.createElement('img');
+    moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    moviePoster.alt = movie.title;
+    movieItem.appendChild(moviePoster);
+
+    const movieTitle = document.createElement('h2');
+    movieTitle.textContent = movie.title;
+    movieItem.appendChild(movieTitle);
+
+    const genreNames = movie.genres.map(genre => genre.name);
+    const movieGenres = document.createElement('p');
+    movieGenres.textContent = `Genres: ${genreNames.join(', ')}`;
+    movieItem.appendChild(movieGenres);
+
+    const movieYear = document.createElement('p');
+    const releaseYear = new Date(movie.release_date).getFullYear();
+    movieYear.textContent = `Year: ${releaseYear}`;
+    movieItem.appendChild(movieYear);
+
+    const movieRating = document.createElement('p');
+    const rating = movie.vote_average.toFixed(1);
+    movieRating.textContent = `Rating: ${rating}`;
+    movieItem.appendChild(movieRating);
+
+    return movieItem;
+}
+
+export function displayMovies(movies) {
     const filmList = document.querySelector('.film-list');
     filmList.innerHTML = '';
 
-    const movieItems = movies.map(movie => {
-        const movieItem = document.createElement('div');
-        movieItem.classList.add('movie-item');
-
-        const moviePoster = document.createElement('img');
-        moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-        moviePoster.alt = movie.title;
-        movieItem.appendChild(moviePoster);
-
-        const movieTitle = document.createElement('h2');
-        movieTitle.textContent = movie.title;
-        movieItem.appendChild(movieTitle);
-
-        const genreNames = movie.genres.map(genre => genre.name);
-        const movieGenres = document.createElement('p');
-        movieGenres.textContent = `Genres: ${genreNames.join(', ')}`;
-        movieItem.appendChild(movieGenres);
-
-        const movieYear = document.createElement('p');
-        const releaseYear = new Date(movie.release_date).getFullYear();
-        movieYear.textContent = `Year: ${releaseYear}`;
-        movieItem.appendChild(movieYear);
-
-        const movieRating = document.createElement('p');
-        const rating = movie.vote_average.toFixed(1);
-        movieRating.textContent = `Rating: ${rating}`;
-        movieItem.appendChild(movieRating);
-
-        return movieItem;
-    });
+    const movieItems = movies.map(movie => renderMovieCard(movie));
 
     filmList.append(...movieItems);
 }
