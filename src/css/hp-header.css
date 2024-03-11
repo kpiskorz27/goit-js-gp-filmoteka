@@ -184,6 +184,21 @@
     }
   }
 
+  .header-home-li {
+    position: relative;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.17;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+    letter-spacing: normal;
+}
+
   .header-home {
     position: relative;
     text-decoration: none;
@@ -209,7 +224,6 @@
         height: 3px;
         border: none;
         background-color: #ff001b;
-    
         transition: width 0.2s ease-in-out;
       }
 
@@ -217,7 +231,6 @@
     &:focus::after {
     width: 0;
   }
-
   
     @media screen and (min-width: 768px) {
     }
@@ -225,6 +238,7 @@
     }
   }
   
+  /*-----------search----------*/
 .search-box {
   display: flex;
   flex-direction: column;
@@ -370,7 +384,7 @@
     overflow: visible;
     letter-spacing: normal;
   }
-  
+
   @media screen and (min-width: 1280px) {
     letter-spacing: normal;
     top: 172px;
