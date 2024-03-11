@@ -45,17 +45,17 @@ export function renderMovieCard(movie) {
 
     const genreNames = movie.genres.map(genre => genre.name);
     const movieGenres = document.createElement('p');
-    movieGenres.textContent = `Genres: ${genreNames.join(', ')}`;
+    movieGenres.textContent = `${genreNames.join(', ')}`;
     movieItem.appendChild(movieGenres);
 
     const movieYear = document.createElement('p');
     const releaseYear = new Date(movie.release_date).getFullYear();
-    movieYear.textContent = `Year: ${releaseYear}`;
+    movieYear.textContent = `${releaseYear}`;
     movieItem.appendChild(movieYear);
 
     const movieRating = document.createElement('p');
     const rating = movie.vote_average.toFixed(1);
-    movieRating.textContent = `Rating: ${rating}`;
+    movieRating.textContent = `${rating}`;
     movieItem.appendChild(movieRating);
 
     return movieItem;
