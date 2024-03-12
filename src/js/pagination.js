@@ -44,8 +44,14 @@ export function renderMovieCard(movie) {
     movieItem.appendChild(movieTitle);
 
     const genreNames = movie.genres.map(genre => genre.name);
+    let movieGenresText = '';
+    if (genreNames.length > 2) {
+        movieGenresText = `${genreNames.slice(0, 2).join(', ')}, Other`;
+    } else {
+        movieGenresText = genreNames.join(', ');
+    }
     const movieGenres = document.createElement('p');
-    movieGenres.textContent = `${genreNames.join(', ')}`;
+    movieGenres.textContent = movieGenresText;
     movieItem.appendChild(movieGenres);
 
     const movieYear = document.createElement('p');
