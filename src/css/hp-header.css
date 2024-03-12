@@ -39,8 +39,7 @@
   @media only screen and (min-width: 1280px) {
     .decor {
       width: 1280px;
-      padding: 40px 32px 40px 32px;
-  
+      padding: 40px 32px;
       background-image: url("../images/homepage/hp-header2.jpg");
       background-repeat: no-repeat;
       background-position: center;
