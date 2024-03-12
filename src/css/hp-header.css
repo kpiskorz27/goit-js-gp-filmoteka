@@ -4,7 +4,7 @@
     padding: 40px 20px 40px 20px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: 100% auto;
     position: relative;
   }
   @media only screen and (min-width: 320px) {
@@ -26,7 +26,7 @@
       background-image: url('../images/homepage/hp-header-tablet.jpg');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
+      background-size: 100% auto;
     }
   
     @media (min-resolution: 2dppx) {
@@ -41,10 +41,10 @@
       width: 1280px;
       padding: 40px 32px 40px 32px;
   
-      background-image: url('../images/homepage/hp-header1.jpg');
+      background-image: url("../images/homepage/hp-header2.jpg");
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
+      background-size: 100% auto;
     }
   
     @media (min-resolution: 2dppx) {
@@ -164,7 +164,7 @@
     100% {
         transform: translateY(0px);
     }
-}
+} 
 
 .logo__text {
     margin-left: 10px;
