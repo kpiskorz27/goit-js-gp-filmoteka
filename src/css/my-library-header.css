@@ -57,7 +57,7 @@
   color: var(--white);
   list-style: none;
 }
-.header-list {
+.header-list-lib {
   list-style: none;
   display: flex;
   justify-content: space-between;
