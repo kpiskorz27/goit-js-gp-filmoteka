@@ -41,33 +41,46 @@ export function renderMovieCard(movie) {
   moviePoster.alt = movie.title;
   movieItem.appendChild(moviePoster);
 
+  const contentWrapper = document.createElement('div'); // Nowy div z zwartosciami p, Bartosz K
+  contentWrapper.classList.add('content-wrapper'); 
+
   const movieTitle = document.createElement('h2');
   movieTitle.textContent = movie.title;
   movieItem.appendChild(movieTitle);
 
-  const genreNames = movie.genres.map(genre => genre.name);
+  const genreNames = movie.genres.map(genre => {
+    return genre.name === "Science Fiction" ? "Sci-Fi" : genre.name; // Warunek, aby w przypadku pelnej nazwy okrajało do skrótu, Bartosz K
+  });
+
   let movieGenresText = '';
   if (genreNames.length > 2) {
     movieGenresText = `${genreNames.slice(0, 2).join(', ')}, Other`; // Pokaż dwa pierwsze gatunki i dodaj " + other"
   } else {
     movieGenresText = genreNames.join(', ');
   }
+
   const movieGenres = document.createElement('p');
   movieGenres.textContent = movieGenresText;
-  movieItem.appendChild(movieGenres);
+  contentWrapper.appendChild(movieGenres);
 
   const movieYear = document.createElement('p');
   const releaseYear = new Date(movie.release_date).getFullYear();
-  movieYear.textContent = `${releaseYear}`;
-  movieItem.appendChild(movieYear);
+  movieYear.textContent = `| ${releaseYear}`; // Dodanie znaku "|" , Bartosz K
+  movieYear.classList.add('movie-year')
+  contentWrapper.appendChild(movieYear);
+
+  movieItem.appendChild(contentWrapper); 
 
   const movieRating = document.createElement('p');
   const rating = movie.vote_average.toFixed(1);
   movieRating.textContent = `${rating}`;
   movieItem.appendChild(movieRating);
+  contentWrapper.appendChild(movieRating); 
 
+  movieRating.classList.add('main-rating'); // Dodaje klase aby schowac element w main, Bartosz K 
   return movieItem;
 }
+
 
 export function displayMovies(movies) {
   const filmList = document.querySelector('.film-list');
