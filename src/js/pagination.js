@@ -35,6 +35,7 @@ async function getPopularMovies(page = 1) {
 export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
+  movieItem.setAttribute('data-modal-open', '');
 
   const moviePoster = document.createElement('img');
   moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
@@ -42,14 +43,14 @@ export function renderMovieCard(movie) {
   movieItem.appendChild(moviePoster);
 
   const contentWrapper = document.createElement('div'); // Nowy div z zwartosciami p, Bartosz K
-  contentWrapper.classList.add('content-wrapper'); 
+  contentWrapper.classList.add('content-wrapper');
 
   const movieTitle = document.createElement('h2');
   movieTitle.textContent = movie.title;
   movieItem.appendChild(movieTitle);
 
   const genreNames = movie.genres.map(genre => {
-    return genre.name === "Science Fiction" ? "Sci-Fi" : genre.name; // Warunek, aby w przypadku pelnej nazwy okrajało do skrótu, Bartosz K
+    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pelnej nazwy okrajało do skrótu, Bartosz K
   });
 
   let movieGenresText = '';
@@ -66,21 +67,21 @@ export function renderMovieCard(movie) {
   const movieYear = document.createElement('p');
   const releaseYear = new Date(movie.release_date).getFullYear();
   movieYear.textContent = `| ${releaseYear}`; // Dodanie znaku "|" , Bartosz K
-  movieYear.classList.add('movie-year')
+  movieYear.classList.add('movie-year');
   contentWrapper.appendChild(movieYear);
 
-  movieItem.appendChild(contentWrapper); 
+  movieItem.appendChild(contentWrapper);
 
   const movieRating = document.createElement('p');
   const rating = movie.vote_average.toFixed(1);
   movieRating.textContent = `${rating}`;
   movieItem.appendChild(movieRating);
-  contentWrapper.appendChild(movieRating); 
+  contentWrapper.appendChild(movieRating);
 
-  movieRating.classList.add('main-rating'); // Dodaje klase aby schowac element w main, Bartosz K 
+  movieRating.classList.add('main-rating'); // Dodaje klase aby schowac element w main, Bartosz K
+
   return movieItem;
 }
-
 
 export function displayMovies(movies) {
   const filmList = document.querySelector('.film-list');
