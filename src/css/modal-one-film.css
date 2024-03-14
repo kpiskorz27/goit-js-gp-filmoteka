@@ -50,7 +50,7 @@
 .modal-close-btn:hover,
 .modal-close-btn:focus {
   stroke: var(--orange);
-  background-color: var(--orange);
+  background-color: lightgrey;
   border-radius: 25px;
 }
 
