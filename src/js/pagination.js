@@ -1,6 +1,8 @@
 // PAGINACJA //
 
-function renderPagination(totalPages, currentPage) {
+import { loadMoviesPage } from './film-api.js';
+
+export function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
 

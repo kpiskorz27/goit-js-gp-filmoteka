@@ -1,6 +1,8 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
 
+import { renderPagination } from './pagination.js';
+
 async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -80,7 +82,7 @@ export function displayMovies(movies) {
 
 import { renderPagination } from './pagination.js';
 
-async function loadMoviesPage(page) {
+export async function loadMoviesPage(page) {
   const { movies, totalPages } = await getPopularMovies(page);
   displayMovies(movies);
   renderPagination(totalPages, page);
