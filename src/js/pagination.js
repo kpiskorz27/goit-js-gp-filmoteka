@@ -1,7 +1,7 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
 
-async function getMovieDetails(movieId) {
+export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
     const response = await fetch(url);
