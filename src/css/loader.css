@@ -3,6 +3,9 @@
   padding: 10px;
   position: absolute;
 }
+.hidden {
+  visibility: hidden;
+}
 .loader__text {
   margin: 5px auto;
   color: #3d314a;

@@ -12,10 +12,12 @@ export async function getMovieDetails(movieId) {
     return null;
   }
 }
-
+const loader = document.querySelector('.loader');
 async function getPopularMovies(page = 1) {
   const urlWithPage = `${apiUrl}&page=${page}`;
+  loader.classList.remove('hidden');
   try {
+    await new Promise(resolve => setTimeout(resolve, 1000));
     const response = await fetch(urlWithPage);
     const data = await response.json();
     const movies = data.results;
@@ -25,6 +27,7 @@ async function getPopularMovies(page = 1) {
         return { ...movie, ...details };
       }),
     );
+    loader.classList.add('hidden');
     return { movies: detailedMovies, totalPages: data.total_pages };
   } catch (error) {
     console.error('Error while fetching data:', error);
@@ -136,12 +139,12 @@ function renderPagination(totalPages, currentPage) {
     </svg>
 `;
 
-firstPageButton.style.cursor = "pointer";
-firstPageButton.classList.add('page-button', 'first-button');
-firstPageButton.addEventListener('click', () => {
-    loadMoviesPage(currentPage -1);
-});
-paginationContainer.appendChild(firstPageButton);
+  firstPageButton.style.cursor = 'pointer';
+  firstPageButton.classList.add('page-button', 'first-button');
+  firstPageButton.addEventListener('click', () => {
+    loadMoviesPage(currentPage - 1);
+  });
+  paginationContainer.appendChild(firstPageButton);
 
   if (startPage > 1) {
     const ellipsis1 = document.createElement('span');
@@ -190,9 +193,9 @@ paginationContainer.appendChild(firstPageButton);
   lastPageButton.classList.add('page-button', 'last-button');
   lastPageButton.style.cursor = 'pointer';
   lastPageButton.addEventListener('click', () => {
-      const previousPage = Math.max(currentPage + 1, 1);
-      loadMoviesPage(previousPage);
-   });
+    const previousPage = Math.max(currentPage + 1, 1);
+    loadMoviesPage(previousPage);
+  });
 
   paginationContainer.appendChild(lastPageButton);
 
@@ -217,14 +220,17 @@ paginationContainer.appendChild(firstPageButton);
       return { movies: [], totalPages: 0 };
     }
   }
-
   // TO SEARCH //
   async function searchMovies(keyword, page = 1) {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
       keyword,
     )}&page=${page}`;
     try {
-      const response = await fetch(url);
+      loader.classList.remove('hidden');
+      const [response] = await Promise.all([
+        fetch(url),
+        new Promise(resolve => setTimeout(resolve, 1000)),
+      ]);
       const data = await response.json();
       const movies = data.results;
       const detailedMovies = await Promise.all(
@@ -233,6 +239,8 @@ paginationContainer.appendChild(firstPageButton);
           return { ...movie, ...details };
         }),
       );
+      loader.classList.add('hidden');
+
       return { movies: detailedMovies, totalPages: data.total_pages };
     } catch (error) {
       console.error('Error while searching movies:', error);
