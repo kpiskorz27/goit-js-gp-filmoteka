@@ -144,6 +144,7 @@ paginationContainer.appendChild(firstPageButton);
 if (startPage > 1) {
     const ellipsis1 = document.createElement('span');
     ellipsis1.textContent = '...';
+    ellipsis1.classList.add('ellipsis-span');
     paginationContainer.appendChild(ellipsis1);
 }
 
@@ -165,6 +166,7 @@ if (startPage > 1) {
   if (endPage < totalPages) {
     const ellipsis2 = document.createElement('span');
     ellipsis2.textContent = '...';
+    ellipsis2.classList.add('ellipsis-span');
     paginationContainer.appendChild(ellipsis2);
 
     const lastPage = Math.min(endPage + increment, totalPages);
