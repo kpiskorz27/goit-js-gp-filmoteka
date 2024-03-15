@@ -62,6 +62,7 @@
 }
 
 .pagination{
+    width: 320px;
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -80,6 +81,12 @@
     width: 40px;
     border-radius: 5px;
   }
+  
+  .ellipsis-span {
+    margin-bottom: 6px;
+    display: none;
+}
+
 
   .active{
     background-color: var(--orange);
@@ -114,6 +121,13 @@
         width: 336px;
     }
    
+    .pagination{
+        width: 374px;
+    }
+    .ellipsis-span {
+        display: flex
+    }
+    
  }
 
  @media (min-width:1280px) { 

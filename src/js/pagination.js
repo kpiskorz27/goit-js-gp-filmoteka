@@ -135,16 +135,18 @@ function renderPagination(totalPages, currentPage) {
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M25.333 16H6.666M16 25.333 6.667 16 16 6.667" style="stroke:var(--color2, #000)"/>
     </svg>
 `;
-  firstPageButton.style.cursor = 'pointer';
-  firstPageButton.classList.add('page-button', 'first-button');
-  firstPageButton.addEventListener('click', () => {
-    loadMoviesPage(1);
-  });
-  paginationContainer.appendChild(firstPageButton);
+
+firstPageButton.style.cursor = "pointer";
+firstPageButton.classList.add('page-button', 'first-button');
+firstPageButton.addEventListener('click', () => {
+    loadMoviesPage(currentPage -1);
+});
+paginationContainer.appendChild(firstPageButton);
 
   if (startPage > 1) {
     const ellipsis1 = document.createElement('span');
     ellipsis1.textContent = '...';
+    ellipsis1.classList.add('ellipsis-span');
     paginationContainer.appendChild(ellipsis1);
   }
 
@@ -165,6 +167,7 @@ function renderPagination(totalPages, currentPage) {
   if (endPage < totalPages) {
     const ellipsis2 = document.createElement('span');
     ellipsis2.textContent = '...';
+    ellipsis2.classList.add('ellipsis-span');
     paginationContainer.appendChild(ellipsis2);
 
     const lastPage = Math.min(endPage + increment, totalPages);
@@ -187,9 +190,9 @@ function renderPagination(totalPages, currentPage) {
   lastPageButton.classList.add('page-button', 'last-button');
   lastPageButton.style.cursor = 'pointer';
   lastPageButton.addEventListener('click', () => {
-    const previousPage = Math.max(currentPage - 1, 1);
-    loadMoviesPage(previousPage);
-  });
+      const previousPage = Math.max(currentPage + 1, 1);
+      loadMoviesPage(previousPage);
+   });
 
   paginationContainer.appendChild(lastPageButton);
 
