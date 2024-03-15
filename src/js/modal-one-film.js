@@ -1,4 +1,3 @@
-import { getMovieDetails, renderMovieCard } from './pagination';
 const movieModal = document.querySelector('.movie-modal');
 const overlay = document.querySelector('.movie-backdrop');
 const closeBtn = document.querySelector('.modal-close-btn');
