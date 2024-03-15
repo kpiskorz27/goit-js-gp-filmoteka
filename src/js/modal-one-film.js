@@ -7,6 +7,7 @@ function openModal(event) {
   event.preventDefault();
   overlay.classList.remove('is-hidden');
   movieModal.classList.remove('is-hidden');
+  closeBtn.addEventListener('click', closeModal);
 }
 function closeModal(event) {
   event.preventDefault();
@@ -26,9 +27,13 @@ function removeEventListeners() {
   overlay.removeEventListener('click', closeModal);
   closeBtn.removeEventListener('click', closeModal);
 }
+document.addEventListener('click', function (event) {
+  const target = event.target;
 
-overlay.addEventListener('click', closeModal);
-closeBtn.addEventListener('click', closeModal);
+  if (target.classList.contains('movie-backdrop')) {
+    closeModal(event);
+  }
+});
 window.addEventListener('keydown', escExit);
 
 function cardSelection() {
