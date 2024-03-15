@@ -85,6 +85,7 @@
     background-color: var(--orange);
     color: white;
   }
+  
   .first-button, .last-button{
     display: flex;
     justify-content: center;
@@ -92,7 +93,6 @@
     background-color:var(--light_grey);
     margin-right: 7px;  
 }
-
 
  @media (min-width:768px) {
     .film-list{    

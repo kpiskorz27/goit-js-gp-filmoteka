@@ -35,6 +35,7 @@ async function getPopularMovies(page = 1) {
 export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
+  movieItem.style.cursor = "pointer";
   movieItem.setAttribute('data-modal-open', '');
 
   const moviePoster = document.createElement('img');
@@ -133,6 +134,7 @@ firstPageButton.innerHTML = `
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M25.333 16H6.666M16 25.333 6.667 16 16 6.667" style="stroke:var(--color2, #000)"/>
     </svg>
 `;
+firstPageButton.style.cursor = "pointer";
 firstPageButton.classList.add('page-button', 'first-button');
 firstPageButton.addEventListener('click', () => {
     loadMoviesPage(1);
@@ -149,6 +151,7 @@ if (startPage > 1) {
   for (let page = startPage; page <= endPage; page++) {
     const pageButton = document.createElement('button');
     pageButton.textContent = page;
+    pageButton.style.cursor = "pointer";
     pageButton.classList.add('page-button');
     if (page === currentPage) {
       pageButton.classList.add('active');
@@ -182,6 +185,7 @@ if (startPage > 1) {
       </svg>
   `;
   lastPageButton.classList.add('page-button', 'last-button');
+  lastPageButton.style.cursor = "pointer";
   lastPageButton.addEventListener('click', () => {
       const previousPage = Math.max(currentPage - 1, 1);
       loadMoviesPage(previousPage);
