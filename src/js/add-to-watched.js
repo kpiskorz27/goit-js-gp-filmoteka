@@ -2,22 +2,23 @@ import { addToLibrary } from "./add-to-queue";
     
 const addToWatchedBtn = document.querySelector(".watched-button");
 
-// let moviesOnWatched = [];
+let moviesOnWatched = JSON.parse(localStorage.getItem("watched")) || [];
 const movie = {
-            poster_path: "/hu40Uxp9WtpL34jv3zyWLb5zEVY.jpg",
+            poster_path: "/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
             genres: [
-                { id: 28, name: 'Horror' },
-                { id: 27, name: 'Dramat' },
+                { id: 28, name: 'Action' },
+                { id: 16, name: 'Animation' },
             ],
-            release_date: "2024-01-18",
-            vote_average: 5.444,
-            title: "outlander",
+            id: 870404,
+            release_date: "2024-03-02",
+            vote_average: 6.976,
+            title: "Kung Fu Panda 4",
         }
 
 addToWatchedBtn.addEventListener("click", () => {
         
-    // moviesOnWatched.push(movie);
-    console.log(movie);
-    addToLibrary("watched", movie);
+    moviesOnWatched.push(movie);
+    console.log(moviesOnWatched);
+    addToLibrary("watched", moviesOnWatched);
    
 })
