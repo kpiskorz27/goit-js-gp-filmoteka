@@ -35,6 +35,7 @@ async function getPopularMovies(page = 1) {
 export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
+  movieItem.style.cursor = "pointer";
   movieItem.setAttribute('data-modal-open', '');
 
   const moviePoster = document.createElement('img');
@@ -128,22 +129,29 @@ function renderPagination(totalPages, currentPage) {
   }
 
   const firstPageButton = document.createElement('button');
-  firstPageButton.textContent = '<<';
-  firstPageButton.classList.add('page-button', 'first-button');
-  firstPageButton.addEventListener('click', () => {
+firstPageButton.innerHTML = `
+    <svg class="icon icon-arrow-left" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M25.333 16H6.666M16 25.333 6.667 16 16 6.667" style="stroke:var(--color2, #000)"/>
+    </svg>
+`;
+firstPageButton.style.cursor = "pointer";
+firstPageButton.classList.add('page-button', 'first-button');
+firstPageButton.addEventListener('click', () => {
     loadMoviesPage(1);
-  });
-  paginationContainer.appendChild(firstPageButton);
+});
+paginationContainer.appendChild(firstPageButton);
 
-  if (startPage > 1) {
+if (startPage > 1) {
     const ellipsis1 = document.createElement('span');
     ellipsis1.textContent = '...';
     paginationContainer.appendChild(ellipsis1);
-  }
+}
+
 
   for (let page = startPage; page <= endPage; page++) {
     const pageButton = document.createElement('button');
     pageButton.textContent = page;
+    pageButton.style.cursor = "pointer";
     pageButton.classList.add('page-button');
     if (page === currentPage) {
       pageButton.classList.add('active');
@@ -171,14 +179,20 @@ function renderPagination(totalPages, currentPage) {
   }
 
   const lastPageButton = document.createElement('button');
-  lastPageButton.textContent = '>>';
+  lastPageButton.innerHTML = `
+      <svg class="icon icon-arrow-right" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M6.667 16h18.667M16 25.333l9.333-9.333-9.333-9.333" style="stroke:var(--color2, #000)"/>
+      </svg>
+  `;
   lastPageButton.classList.add('page-button', 'last-button');
+  lastPageButton.style.cursor = "pointer";
   lastPageButton.addEventListener('click', () => {
-    const nextPage = Math.min(currentPage + 1, totalPages);
-    loadMoviesPage(nextPage);
+      const previousPage = Math.max(currentPage - 1, 1);
+      loadMoviesPage(previousPage);
   });
-
+  
   paginationContainer.appendChild(lastPageButton);
+  
 
   async function searchMovies(keyword, page = 1) {
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
