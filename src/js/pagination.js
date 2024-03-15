@@ -137,7 +137,7 @@ firstPageButton.innerHTML = `
 firstPageButton.style.cursor = "pointer";
 firstPageButton.classList.add('page-button', 'first-button');
 firstPageButton.addEventListener('click', () => {
-    loadMoviesPage(1);
+    loadMoviesPage(currentPage -1);
 });
 paginationContainer.appendChild(firstPageButton);
 
@@ -189,7 +189,7 @@ if (startPage > 1) {
   lastPageButton.classList.add('page-button', 'last-button');
   lastPageButton.style.cursor = "pointer";
   lastPageButton.addEventListener('click', () => {
-      const previousPage = Math.max(currentPage - 1, 1);
+      const previousPage = Math.max(currentPage + 1, 1);
       loadMoviesPage(previousPage);
   });
   
