@@ -1,6 +1,8 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
 
+let currentSearchKeyword = '';
+
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -12,7 +14,9 @@ export async function getMovieDetails(movieId) {
     return null;
   }
 }
+
 const loader = document.querySelector('.loader');
+
 async function getPopularMovies(page = 1) {
   const urlWithPage = `${apiUrl}&page=${page}`;
   loader.classList.remove('hidden');
@@ -45,9 +49,18 @@ export function renderMovieCard(movie) {
   const moviePoster = document.createElement('img');
   moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   moviePoster.alt = movie.title;
+
+  moviePoster.onerror = function() {
+    const defaultPoster = new Image(); // Tworzenie nowego obiektu Image
+    defaultPoster.src = '../images/image-one.jpg'; // Ustawienie domyślnego obrazka
+    moviePoster.src = defaultPoster.src;
+    moviePoster.onerror = null;
+  };
+
   movieItem.appendChild(moviePoster);
 
-  const contentWrapper = document.createElement('div'); // Nowy div z zwartosciami p, Bartosz K
+
+  const contentWrapper = document.createElement('div'); // Nowy div z zawartością p, Bartosz K
   contentWrapper.classList.add('content-wrapper');
 
   const movieTitle = document.createElement('h2');
@@ -55,7 +68,7 @@ export function renderMovieCard(movie) {
   movieItem.appendChild(movieTitle);
 
   const genreNames = movie.genres.map(genre => {
-    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pelnej nazwy okrajało do skrótu, Bartosz K
+    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pełnej nazwy okrągło do skrótu, Bartosz K
   });
 
   let movieGenresText = '';
@@ -82,8 +95,7 @@ export function renderMovieCard(movie) {
   movieRating.textContent = `${rating}`;
   movieItem.appendChild(movieRating);
   contentWrapper.appendChild(movieRating);
-
-  movieRating.classList.add('main-rating'); // Dodaje klase aby schowac element w main, Bartosz K
+  movieRating.classList.add('main-rating'); // Dodaje klasę, aby schować element w głównym, Bartosz K
 
   return movieItem;
 }
@@ -97,10 +109,22 @@ export function displayMovies(movies) {
   filmList.append(...movieItems);
 }
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' }); // Funkcja przenosząca nas na góre strony (dodane w celu ulatwienia szukania filmow), Bartosz K
+}
+
 async function loadMoviesPage(page) {
-  const { movies, totalPages } = await getPopularMovies(page);
-  displayMovies(movies);
-  renderPagination(totalPages, page);
+  if (!currentSearchKeyword) { 
+    const { movies, totalPages } = await getPopularMovies(page); //jeśli nie istnieje wyszukiwana fraza, to ładuj popularne filmy, Bartosz K
+    displayMovies(movies);
+    renderPagination(totalPages, page);
+    scrollToTop(); 
+  } else {
+    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie 
+    displayMovies(movies);
+    renderPagination(totalPages, page);
+    scrollToTop(); 
+  }
 }
 
 async function main() {
@@ -199,64 +223,55 @@ function renderPagination(totalPages, currentPage) {
 
   paginationContainer.appendChild(lastPageButton);
 
-  async function searchMovies(keyword, page = 1) {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
-      keyword,
-    )}&page=${page}`;
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      const movies = data.results;
-      const detailedMovies = await Promise.all(
-        movies.map(async movie => {
-          // Przy założeniu, że funkcja getMovieDetails jest już zdefiniowana w Twoim kodzie
-          const details = await getMovieDetails(movie.id);
-          return { ...movie, ...details };
-        }),
-      );
-      return { movies: detailedMovies, totalPages: data.total_pages };
-    } catch (error) {
-      console.error('Error while searching movies:', error);
-      return { movies: [], totalPages: 0 };
-    }
-  }
-  // TO SEARCH //
-  async function searchMovies(keyword, page = 1) {
-    const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
-      keyword,
-    )}&page=${page}`;
-    try {
-      loader.classList.remove('hidden');
-      const [response] = await Promise.all([
-        fetch(url),
-        new Promise(resolve => setTimeout(resolve, 1000)),
-      ]);
-      const data = await response.json();
-      const movies = data.results;
-      const detailedMovies = await Promise.all(
-        movies.map(async movie => {
-          const details = await getMovieDetails(movie.id);
-          return { ...movie, ...details };
-        }),
-      );
-      loader.classList.add('hidden');
-
-      return { movies: detailedMovies, totalPages: data.total_pages };
-    } catch (error) {
-      console.error('Error while searching movies:', error);
-      return { movies: [], totalPages: 0 };
-    }
-  }
-
-  async function handleSearch(keyword) {
-    const { movies, totalPages } = await searchMovies(keyword);
-    displayMovies(movies);
-    renderPagination(totalPages, 1);
-  }
-
-  document.querySelector('.search-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const keyword = document.querySelector('.search-input').value;
-    handleSearch(keyword);
-  });
 }
+
+async function searchMovies(keyword, page = 1) {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
+    keyword,
+  )}&page=${page}`;
+  try {
+    loader.classList.remove('hidden');
+    const response = await fetch(url);
+    const data = await response.json();
+    const movies = data.results;
+    const detailedMovies = await Promise.all(
+      movies.map(async movie => {
+        const details = await getMovieDetails(movie.id);
+        return { ...movie, ...details };
+      }),
+    );
+    loader.classList.add('hidden');
+    return { movies: detailedMovies, totalPages: data.total_pages };
+  } catch (error) {
+    console.error('Error while searching movies:', error);
+    return { movies: [], totalPages: 0 };
+  }
+}
+
+function toggleNotification(flag) {
+  const notifyEl = document.getElementById('error-message');
+  if (flag) {
+    notifyEl.style.opacity = '1'; 
+  } else {
+    notifyEl.style.opacity = '0';
+  }
+}
+
+async function handleSearch(keyword, page = 1) {
+  currentSearchKeyword = keyword;
+  const { movies, totalPages } = await searchMovies(keyword, page);
+  if (movies.length === 0) {
+    toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
+  } else {
+    toggleNotification(false); 
+    displayMovies(movies);
+    renderPagination(totalPages, page);
+  }
+
+
+}
+document.querySelector('.search-form').addEventListener('submit', function (event) {
+  event.preventDefault();
+  const keyword = document.querySelector('.search-input').value;
+  handleSearch(keyword, 1);
+});
