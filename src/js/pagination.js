@@ -51,8 +51,8 @@ export function renderMovieCard(movie) {
   moviePoster.alt = movie.title;
 
   moviePoster.onerror = function() {
-    const defaultPoster = new Image(); // Tworzenie nowego obiektu Image
-    defaultPoster.src = '../images/image-one.jpg'; // Ustawienie domyślnego obrazka
+    const defaultPoster = new Image(); // Nowy obrazek w przypadku nieladowania sie defaultowego (nie dziala yet)
+    defaultPoster.src = '../images/image-one.jpg'; 
     moviePoster.src = defaultPoster.src;
     moviePoster.onerror = null;
   };
