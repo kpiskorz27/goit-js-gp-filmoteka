@@ -43,7 +43,7 @@ export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
   movieItem.style.cursor = 'pointer';
-  movieItem.setAttribute('data-modal-open', '');
+  movieItem.setAttribute('data-modal', '');
   movieItem.setAttribute('data-id', movie.id);
 
   const moviePoster = document.createElement('img');
