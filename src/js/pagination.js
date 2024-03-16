@@ -43,22 +43,21 @@ export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
   movieItem.style.cursor = 'pointer';
-  movieItem.setAttribute('data-modal-open', '');
+  movieItem.setAttribute('data-modal', '');
   movieItem.setAttribute('data-id', movie.id);
 
   const moviePoster = document.createElement('img');
   moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   moviePoster.alt = movie.title;
 
-  moviePoster.onerror = function() {
+  moviePoster.onerror = function () {
     const defaultPoster = new Image(); // Nowy obrazek w przypadku nieladowania sie defaultowego (nie dziala yet)
-    defaultPoster.src = '../images/image-one.jpg'; 
+    defaultPoster.src = '../images/image-one.jpg';
     moviePoster.src = defaultPoster.src;
     moviePoster.onerror = null;
   };
 
   movieItem.appendChild(moviePoster);
-
 
   const contentWrapper = document.createElement('div'); // Nowy div z zawartością p, Bartosz K
   contentWrapper.classList.add('content-wrapper');
@@ -114,16 +113,16 @@ function scrollToTop() {
 }
 
 async function loadMoviesPage(page) {
-  if (!currentSearchKeyword) { 
+  if (!currentSearchKeyword) {
     const { movies, totalPages } = await getPopularMovies(page); //jeśli nie istnieje wyszukiwana fraza, to ładuj popularne filmy, Bartosz K
     displayMovies(movies);
     renderPagination(totalPages, page);
-    scrollToTop(); 
+    scrollToTop();
   } else {
-    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie 
+    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie
     displayMovies(movies);
     renderPagination(totalPages, page);
-    scrollToTop(); 
+    scrollToTop();
   }
 }
 
@@ -222,7 +221,6 @@ function renderPagination(totalPages, currentPage) {
   });
 
   paginationContainer.appendChild(lastPageButton);
-
 }
 
 async function searchMovies(keyword, page = 1) {
@@ -251,7 +249,7 @@ async function searchMovies(keyword, page = 1) {
 function toggleNotification(flag) {
   const notifyEl = document.getElementById('error-message');
   if (flag) {
-    notifyEl.style.opacity = '1'; 
+    notifyEl.style.opacity = '1';
   } else {
     notifyEl.style.opacity = '0';
   }
@@ -263,12 +261,10 @@ async function handleSearch(keyword, page = 1) {
   if (movies.length === 0) {
     toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
   } else {
-    toggleNotification(false); 
+    toggleNotification(false);
     displayMovies(movies);
     renderPagination(totalPages, page);
   }
-
-
 }
 document.querySelector('.search-form').addEventListener('submit', function (event) {
   event.preventDefault();
