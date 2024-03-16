@@ -1,16 +1,10 @@
 function toggleNotification(flag) {
-    const notifyEl = document.querySelector('.notification');
-    console.log(flag);
-    if (flag) {
-      console.log('step1');
-  
-      notifyEl.classList.add('opacityZero');
-      return;
-    }
-    console.log('step2');
+  const notifyEl = document.getElementById('error-message');
+  if (flag) {
+    notifyEl.textContent = 'Search result not successful. Enter the correct movie name and try again.';
     notifyEl.classList.remove('opacityZero');
-    setTimeout(() => {
-      notifyEl.classList.add('opacityZero');
-    }, 5000);
-    return;
+  } else {
+    notifyEl.textContent = '';
+    notifyEl.classList.add('opacityZero');
   }
+}
