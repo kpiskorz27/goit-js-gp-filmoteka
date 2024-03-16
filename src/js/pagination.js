@@ -1,7 +1,6 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
-import imageOne from '../assets/no-poster-available.jpg
-';
+import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets 
 
 
 let currentSearchKeyword = '';
