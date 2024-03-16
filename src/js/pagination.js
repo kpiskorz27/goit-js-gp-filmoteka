@@ -282,8 +282,11 @@ async function handleSearch(keyword, page = 1) {
     renderPagination(totalPages, page);
   }
 }
-document.querySelector('.search-form').addEventListener('submit', function (event) {
-  event.preventDefault();
-  const keyword = document.querySelector('.search-input').value;
-  handleSearch(keyword, 1);
-});
+const searchForm = document.querySelector('.search-form');
+if (searchForm) {
+  searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const keyword = document.querySelector('.search-input').value;
+    handleSearch(keyword, 1);
+  });
+}
