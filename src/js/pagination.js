@@ -164,8 +164,10 @@ function renderPagination(totalPages, currentPage) {
 
   firstPageButton.style.cursor = 'pointer';
   firstPageButton.classList.add('page-button', 'first-button');
+  if (currentPage > 1) //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
   firstPageButton.addEventListener('click', () => {
     loadMoviesPage(currentPage - 1);
+    toggleNotification(false);
   });
   paginationContainer.appendChild(firstPageButton);
 
@@ -176,6 +178,7 @@ function renderPagination(totalPages, currentPage) {
     firstPage.classList.add('page-button');
     firstPage.addEventListener('click', () => {
       loadMoviesPage(1);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(firstPage);
 
@@ -197,6 +200,7 @@ function renderPagination(totalPages, currentPage) {
     }
     pageButton.addEventListener('click', () => {
       loadMoviesPage(page);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(pageButton);
   }
@@ -216,6 +220,7 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.classList.add('page-button');
     lastPageButton.addEventListener('click', () => {
       loadMoviesPage(lastPage);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(lastPageButton);
   }
@@ -231,6 +236,7 @@ function renderPagination(totalPages, currentPage) {
   lastPageButton.addEventListener('click', () => {
     const nextPage = Math.min(currentPage + 1, totalPages);
     loadMoviesPage(nextPage);
+    toggleNotification(false);
   });
 
   paginationContainer.appendChild(lastPageButton);
@@ -270,15 +276,20 @@ function toggleNotification(flag) {
 
 async function handleSearch(keyword, page = 1) {
   currentSearchKeyword = keyword;
+  if (keyword.trim() === '') { // jesli wyszukiwarka jest pusta, laduje popularne filmy,Bartosz K
+    await loadMoviesPage(page); 
+  } else {
   const { movies, totalPages } = await searchMovies(keyword, page);
   if (movies.length === 0) {
     toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
+    currentSearchKeyword = ''; //odswieza wyszukiwanie po nacisnieciu na przycisk paginacji, Bartosz K
+    document.querySelector('.search-input').value = ''; // czysci wyszukiwarke z nieznalezionego tytulu, Bartosz K
   } else {
     toggleNotification(false); 
     displayMovies(movies);
     renderPagination(totalPages, page);
   }
-
+  }
 
 }
 document.querySelector('.search-form').addEventListener('submit', function (event) {
@@ -286,3 +297,5 @@ document.querySelector('.search-form').addEventListener('submit', function (even
   const keyword = document.querySelector('.search-input').value;
   handleSearch(keyword, 1);
 });
+
+
