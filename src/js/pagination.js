@@ -1,5 +1,8 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
+import imageOne from '../assets/no-poster-available.jpg
+';
+
 
 let currentSearchKeyword = '';
 
@@ -49,17 +52,12 @@ export function renderMovieCard(movie) {
   const moviePoster = document.createElement('img');
   if (movie.poster_path) {
     moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    moviePoster.alt = movie.title;
   } else {
-    moviePoster.src = '/image-one.png';
+    moviePoster.src = imageOne;   // jesli sciezka obrazu nie jest dostepna uzyj zimportowanego obrazu, Bartosz K
+    moviePoster.alt = 'no image';
   }
-  moviePoster.alt = movie.title;
-
-  moviePoster.onerror = function(event) {
-    if (event.type === 'error' && event.target.src.startsWith('https://image.tmdb.org')) {
-      event.target.src = '/image-one.png'; 
-    }
-  };
-  movieItem.appendChild(moviePoster);
+  movieItem.appendChild(moviePoster); 
 
 
   const contentWrapper = document.createElement('div'); // Nowy div z zawartością p, Bartosz K
@@ -70,7 +68,7 @@ export function renderMovieCard(movie) {
   movieItem.appendChild(movieTitle);
 
   const genreNames = movie.genres.map(genre => {
-    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pełnej nazwy okrągło do skrótu, Bartosz K
+    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pełnej nazwy skróciło, Bartosz K
   });
 
   let movieGenresText = '';
