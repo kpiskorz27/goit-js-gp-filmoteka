@@ -116,12 +116,21 @@
   letter-spacing: 0em;
 }
 
-.movieAverageRate {
+.movie-average-rate {
   background-color: #ff6b01;
   width: 36px;
   height: 16px;
-  padding-left: 10px;
+  justify-content: center;
   color: white;
+  border-radius: 5px;
+  display: inline-flex;
+}
+
+.movie-votes {
+  background-color: #f7f7f7;
+  min-width: 3.5em;
+  height: 16px;
+  justify-content: center;
   border-radius: 5px;
   display: inline-flex;
 }

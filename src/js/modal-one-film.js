@@ -83,9 +83,9 @@ function movieModalData(movie) {
 
   movieTitle.textContent = movie.title;
 
-  movieAllVote.innerHTML = `<span class="movieAverageRate">${movie.vote_average.toFixed(
+  movieAllVote.innerHTML = `<span class="movie-average-rate">${movie.vote_average.toFixed(
     1,
-  )}</span> / ${movie.vote_count}`;
+  )}</span> / <span class="movie-votes">${movie.vote_count}</span>`;
   moviePopularity.textContent = movie.popularity;
   movieOriginalTitle.textContent = movie.original_title;
   movieGenre.textContent = genres;
