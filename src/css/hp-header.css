@@ -1,26 +1,37 @@
-.decor {
+.hp-header {
+  @media screen and (min-width: 768px) {
+    display: flex;
+    width: 704px;
+    height: 216px;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 1216px;
+  }
+}
+
+.header-container {
     background-image: url('../images/homepage/hp-header-mobile.jpg');
     margin: 0 auto;
-    padding: 40px 20px 40px 20px;
+    padding: 44px 20px 44px 20px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     position: relative;
   }
   @media only screen and (min-width: 320px) {
-    .decor {
+    .header-container {
       background-image: url('../images/homepage/hp-header-mobile.jpg');
       width: 320px;
     }
     @media (min-resolution: 2dppx) {
-      .decor {
+      .header-container {
         background-image: url('../images/homepage/hp-header-mobile@x2.jpg');
       }
     }
   }
   
   @media only screen and (min-width: 768px) {
-    .decor {
+    .header-container {
       width: 768px;
       padding: 40px 32px 44px 32px;
       background-image: url('../images/homepage/hp-header-tablet.jpg');
@@ -30,14 +41,14 @@
     }
   
     @media (min-resolution: 2dppx) {
-      .decor {
+      .header-container {
         background-image: url('../images/homepage/hp-header-tablet@x2.jpg');
       }
     }
   }
   
   @media only screen and (min-width: 1280px) {
-    .decor {
+    .header-container {
       width: 1280px;
       padding: 40px 32px 40px 32px;
   
@@ -48,26 +59,12 @@
     }
   
     @media (min-resolution: 2dppx) {
-      .decor {
+      .header-container {
         background-image: url('../images/homepage/hp-header2@x2.jpg');
       }
     }
   }
 
-  /*----------------------------header------------------*/
-
-.hp-header {
-  @media screen and (min-width: 768px) {
-    display: flex;
-    width: 704px;
-    height: 216px;
-  }
-  @media screen and (min-width: 1280px) {
-    display: flex;
-    width: 1216px;
-  }
-}
-  
 .nav-container {
     display: flex;
     align-items: center;
@@ -93,22 +90,13 @@
     color: #ffffff;
     text-decoration: none;
   
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 768px), screen and (min-width: 1280px) {
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    @media screen and (min-width: 1280px) {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    &:focus {
-      outline: none;
     }
   }
-  
-  .logo-text {
+  .logo__text {
     display: none;
     @media screen and (min-width: 768px) {
       left: 34px;
@@ -119,18 +107,11 @@
       display: flex;
       align-items: center;
       text-align: center;
-      color: #ffffff;
+      color: var(--white);
       margin-left: 10px;
     }
     @media screen and (min-width: 1280px) {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 30px;
-      line-height: 35px;
       display: flex;
-      align-items: center;
-      text-align: center;
-      color: #ffffff;
     }
   }
 
@@ -165,16 +146,15 @@
     100% {
         transform: translateY(0px);
     }
-}
+} 
 
-.logo__text {
-    margin-left: 10px;
-}
+
 
 .header-list {
     display: flex;
     gap: 10px;
     list-style: none;
+    margin: 0px;
 
     @media screen and (min-width: 320px) {
       gap: 40px;
@@ -185,7 +165,7 @@
     }
   }
 
-  .header-home-li {
+  .header-home-list {
     position: relative;
     text-decoration: none;
     font-style: normal;
@@ -198,6 +178,7 @@
     text-transform: uppercase;
     color: #ffffff;
     letter-spacing: normal;
+    padding: 0px;
 }
 
   .header-home {
@@ -254,7 +235,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  margin-top: 57px;
+  margin-top: 29px;
 
   @media screen and (min-width: 320px) {
     width: 280px;
@@ -263,7 +244,7 @@
     width: 336px;
   }
   @media screen and (min-width: 1280px) {
-    margin-top: 61px;
+    margin-top: 30px;
     width: 394px;
   }
 }
@@ -358,7 +339,7 @@
     }
   }
 }
-
+/*--------ERROR--------*/
 .header-error {
   display: flex;
   font-style: normal;
@@ -371,7 +352,7 @@
   opacity: 0 ;
   transition: opacity 0.3s ease-in-out;
 
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 768px), screen and (min-width: 1280px) {
     display: flex;
     font-style: normal;
     font-weight: 400;
@@ -384,10 +365,5 @@
     top: 172px;
     overflow: visible;
     letter-spacing: normal;
-  }
-
-  @media screen and (min-width: 1280px) {
-    letter-spacing: normal;
-    top: 172px;
   }
 }
