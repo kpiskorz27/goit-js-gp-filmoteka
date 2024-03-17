@@ -1,4 +1,3 @@
-/*-------header--------*/
 .hp-header {
   display: flex;
   width: 320px;
@@ -23,21 +22,21 @@
   background-size: cover;
   position: relative;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 44px 20px 44px 20px;
   width: 320px;
 }
 
 @media only screen and (min-width: 768px) {
   .header-container {
     width: 768px;
-    padding: 40px 32px;
+    padding: 40px 32px 44px 32px;
   }
 }
 
 @media only screen and (min-width: 1280px) {
   .header-container {
     width: 1280px;
-    padding: 40px 32px;
+    padding: 40px 32px 40px 32px;
   }
 }
 
@@ -63,12 +62,19 @@
   .header-container {
     background-image: url('../images/homepage/hp-header1.jpg');
   }
-} 
+}
 
 .nav-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  
+    @media screen and (min-width: 768px) {
+      width: 704px;
+    }
+    @media screen and (min-width: 1280px) {
+      width: 1216px;
+    }
   }
 
   .header-list {
@@ -202,27 +208,19 @@
   font-size: 14px;
   line-height: 1.14;
   align-items: center;
-  color: #ff001b;
+  color: var(--red);
   margin-top: 16px;
   opacity: 0 ;
   transition: opacity 0.3s ease-in-out;
 
   @media screen and (min-width: 768px), screen and (min-width: 1280px) {
-    display: flex;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 1.14;
-    align-items: center;
     text-align: center;
     margin-top: 20px;
-    color: #ff001b;
     top: 172px;
     overflow: visible;
     letter-spacing: normal;
   }
 }
-
 
 
   
