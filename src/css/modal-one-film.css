@@ -81,6 +81,7 @@
   height: 357px;
   margin-top: 36px;
   margin-left: 20px;
+  object-fit: cover;
 }
 
 .movie-container {
@@ -103,7 +104,7 @@
 }
 
 .movie-description {
-  margin-right: 41px;
+  margin-right: 83px;
 }
 
 .movie-descr-values p {
@@ -235,6 +236,9 @@
 
 .movie-details {
   display: flex;
+}
+.movie-original-title {
+  text-transform: uppercase;
 }
 
 @media (min-width: 768px) {
