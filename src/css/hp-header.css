@@ -80,7 +80,7 @@
     }
   }
   
-  /*----------------logo---------------*/
+  /*--------logo--------*/
   .logo {
     display: block;
     align-items: center;
@@ -93,12 +93,12 @@
     @media screen and (min-width: 768px), screen and (min-width: 1280px) {
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
   }
   .logo__text {
     display: none;
-    @media screen and (min-width: 768px) {
+
+    @media screen and (min-width: 768px), screen and (min-width: 1280px) {
       left: 34px;
       font-style: normal;
       font-weight: 500;
@@ -110,18 +110,13 @@
       color: var(--white);
       margin-left: 10px;
     }
-    @media screen and (min-width: 1280px) {
-      display: flex;
-    }
   }
-
 .logo__wrap {
     position: relative;
     overflow: hidden;
     height: 23px;
     width: 24px;
 }
-
 .logo__icon {
     display: flex;
     flex-direction: column;
@@ -129,7 +124,6 @@
     top: -23px;
     left: 0px;
 }
-
 .logo__icon--first {
     height: 23px;
     animation-name: logoIconMovie;
@@ -137,12 +131,10 @@
     animation-timing-function: cubic-bezier(0.2, 0.1, 0.4, 1);
     animation-duration: 1500ms;
 }
-
 @keyframes logoIconMovie {
     0% {
         transform: translateY(23px);
     }
-
     100% {
         transform: translateY(0px);
     }
@@ -339,7 +331,7 @@
     }
   }
 }
-/*--------ERROR--------*/
+/*--------error--------*/
 .header-error {
   display: flex;
   font-style: normal;
