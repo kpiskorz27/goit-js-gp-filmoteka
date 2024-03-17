@@ -1,7 +1,6 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
-import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets 
-
+import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets
 
 let currentSearchKeyword = '';
 
@@ -53,7 +52,7 @@ export function renderMovieCard(movie) {
     moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
     moviePoster.alt = movie.title;
   } else {
-    moviePoster.src = imageOne;   // jesli sciezka obrazu nie jest dostepna uzyj zimportowanego obrazu, Bartosz K
+    moviePoster.src = imageOne; // jesli sciezka obrazu nie jest dostepna uzyj zimportowanego obrazu, Bartosz K
     moviePoster.alt = 'no image';
   }
   moviePoster.alt = movie.title;
@@ -169,11 +168,12 @@ function renderPagination(totalPages, currentPage) {
 
   firstPageButton.style.cursor = 'pointer';
   firstPageButton.classList.add('page-button', 'first-button');
-  if (currentPage > 1) //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
-  firstPageButton.addEventListener('click', () => {
-    loadMoviesPage(currentPage - 1);
-    toggleNotification(false);
-  });
+  if (currentPage > 1)
+    //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
+    firstPageButton.addEventListener('click', () => {
+      loadMoviesPage(currentPage - 1);
+      toggleNotification(false);
+    });
   paginationContainer.appendChild(firstPageButton);
 
   if (startPage > 1) {
@@ -282,26 +282,27 @@ function toggleNotification(flag) {
 
 async function handleSearch(keyword, page = 1) {
   currentSearchKeyword = keyword;
-  if (keyword.trim() === '') { // jesli wyszukiwarka jest pusta, laduje popularne filmy,Bartosz K
-    await loadMoviesPage(page); 
+  if (keyword.trim() === '') {
+    // jesli wyszukiwarka jest pusta, laduje popularne filmy,Bartosz K
+    await loadMoviesPage(page);
   } else {
-  const { movies, totalPages } = await searchMovies(keyword, page);
-  if (movies.length === 0) {
-    toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
-    currentSearchKeyword = ''; //odswieza wyszukiwanie po nacisnieciu na przycisk paginacji, Bartosz K
-    document.querySelector('.search-input').value = ''; // czysci wyszukiwarke z nieznalezionego tytulu, Bartosz K
-  } else {
-    toggleNotification(false);
-    displayMovies(movies);
-    renderPagination(totalPages, page);
+    const { movies, totalPages } = await searchMovies(keyword, page);
+    if (movies.length === 0) {
+      toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
+      currentSearchKeyword = ''; //odswieza wyszukiwanie po nacisnieciu na przycisk paginacji, Bartosz K
+      document.querySelector('.search-input').value = ''; // czysci wyszukiwarke z nieznalezionego tytulu, Bartosz K
+    } else {
+      toggleNotification(false);
+      displayMovies(movies);
+      renderPagination(totalPages, page);
+    }
   }
-
-}
-const searchForm = document.querySelector('.search-form');
-if (searchForm) {
-  searchForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const keyword = document.querySelector('.search-input').value;
-    handleSearch(keyword, 1);
-  });
+  const searchForm = document.querySelector('.search-form');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const keyword = document.querySelector('.search-input').value;
+      handleSearch(keyword, 1);
+    });
+  }
 }
