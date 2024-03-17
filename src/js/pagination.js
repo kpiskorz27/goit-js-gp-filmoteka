@@ -1,5 +1,7 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
+import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets 
+
 
 let currentSearchKeyword = '';
 
@@ -49,11 +51,12 @@ export function renderMovieCard(movie) {
   const moviePoster = document.createElement('img');
   if (movie.poster_path) {
     moviePoster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    moviePoster.alt = movie.title;
   } else {
-    moviePoster.src = '/image-one.png';
+    moviePoster.src = imageOne;   // jesli sciezka obrazu nie jest dostepna uzyj zimportowanego obrazu, Bartosz K
+    moviePoster.alt = 'no image';
   }
   moviePoster.alt = movie.title;
-
   moviePoster.onerror = function (event) {
     if (event.type === 'error' && event.target.src.startsWith('https://image.tmdb.org')) {
       event.target.src = '/image-one.png';
@@ -69,7 +72,7 @@ export function renderMovieCard(movie) {
   movieItem.appendChild(movieTitle);
 
   const genreNames = movie.genres.map(genre => {
-    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pełnej nazwy okrągło do skrótu, Bartosz K
+    return genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name; // Warunek, aby w przypadku pełnej nazwy skróciło, Bartosz K
   });
 
   let movieGenresText = '';
@@ -166,8 +169,10 @@ function renderPagination(totalPages, currentPage) {
 
   firstPageButton.style.cursor = 'pointer';
   firstPageButton.classList.add('page-button', 'first-button');
+  if (currentPage > 1) //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
   firstPageButton.addEventListener('click', () => {
     loadMoviesPage(currentPage - 1);
+    toggleNotification(false);
   });
   paginationContainer.appendChild(firstPageButton);
 
@@ -178,6 +183,7 @@ function renderPagination(totalPages, currentPage) {
     firstPage.classList.add('page-button');
     firstPage.addEventListener('click', () => {
       loadMoviesPage(1);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(firstPage);
 
@@ -199,6 +205,7 @@ function renderPagination(totalPages, currentPage) {
     }
     pageButton.addEventListener('click', () => {
       loadMoviesPage(page);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(pageButton);
   }
@@ -219,6 +226,7 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.classList.add('page-button');
     lastPageButton.addEventListener('click', () => {
       loadMoviesPage(lastPage);
+      toggleNotification(false);
     });
     paginationContainer.appendChild(lastPageButton);
   }
@@ -234,6 +242,7 @@ function renderPagination(totalPages, currentPage) {
   lastPageButton.addEventListener('click', () => {
     const nextPage = Math.min(currentPage + 1, totalPages);
     loadMoviesPage(nextPage);
+    toggleNotification(false);
   });
 
   paginationContainer.appendChild(lastPageButton);
@@ -273,14 +282,20 @@ function toggleNotification(flag) {
 
 async function handleSearch(keyword, page = 1) {
   currentSearchKeyword = keyword;
+  if (keyword.trim() === '') { // jesli wyszukiwarka jest pusta, laduje popularne filmy,Bartosz K
+    await loadMoviesPage(page); 
+  } else {
   const { movies, totalPages } = await searchMovies(keyword, page);
   if (movies.length === 0) {
     toggleNotification(true); // Pokazuje komunikat jesli nie znalazlo filmu, Bartosz K
+    currentSearchKeyword = ''; //odswieza wyszukiwanie po nacisnieciu na przycisk paginacji, Bartosz K
+    document.querySelector('.search-input').value = ''; // czysci wyszukiwarke z nieznalezionego tytulu, Bartosz K
   } else {
     toggleNotification(false);
     displayMovies(movies);
     renderPagination(totalPages, page);
   }
+
 }
 const searchForm = document.querySelector('.search-form');
 if (searchForm) {
