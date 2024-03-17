@@ -16,7 +16,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 280px;
-  height: 940px;
+  max-height: 940px;
   border-radius: 0px;
   background: #fff;
   cursor: default;
@@ -49,13 +49,11 @@
 
 .modal-close-btn:hover,
 .modal-close-btn:focus {
-  stroke: var(--orange);
-  background-color: lightgrey;
   border-radius: 25px;
 }
 
 .modal-close-icon {
-  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1), transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   stroke-width: 2px;
   background: none;
   border-radius: 25px;
@@ -63,9 +61,8 @@
 
 .modal-close-icon:hover,
 .modal-close-icon:active {
-  color: var(--orange);
-  fill: var(--orange);
   border-radius: 25px;
+  transform: rotate(90deg);
 }
 
 .is-hidden {
@@ -80,12 +77,10 @@
 
 .movie-image {
   border-radius: 5px;
-
   width: 240px;
   height: 357px;
   margin-top: 36px;
   margin-left: 20px;
-  border: solid 1px black;
 }
 
 .movie-container {
@@ -104,16 +99,44 @@
   font-weight: 500;
   line-height: 1.172;
   letter-spacing: 0em;
-  text-align: left;
+  text-transform: uppercase;
+}
+
+.movie-description {
+  margin-right: 41px;
+}
+
+.movie-descr-values p {
+  margin-bottom: 8px;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33333;
+  letter-spacing: 0em;
+}
+
+.movieAverageRate {
+  background-color: #ff6b01;
+  width: 36px;
+  height: 16px;
+  padding-left: 10px;
+  color: white;
+  border-radius: 5px;
+  display: inline-flex;
 }
 
 .movie-descr {
   font-family: 'Roboto', sans-serif;
+  width: 70px;
   font-weight: 500;
   font-size: 12px;
   line-height: 1.33333;
   color: #8c8c8c;
   margin-bottom: 8px;
+}
+
+.movie-descr:last-child {
+  margin-bottom: 20px;
 }
 
 .movie-about h3 {
@@ -124,11 +147,12 @@
   letter-spacing: 0em;
   text-align: left;
   color: #000000;
+  margin-bottom: 8px;
 }
 
 .movie-about-par {
   width: 240px;
-  height: 260px;
+  max-height: 260px;
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 12px;
@@ -144,6 +168,7 @@
 
 .modal-buttons button {
   margin-right: 20px;
+  margin-bottom: 40px;
 }
 
 .modal-buttons button:last-child {
@@ -182,7 +207,6 @@
 
 .queue-button {
   background-color: white;
-
   display: flex;
   align-items: center;
   padding: 10px 10px;
@@ -267,14 +291,14 @@
   }
 
   .modal-close-icon {
-    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
     stroke-width: 2px;
   }
 
   .modal-close-icon:hover,
   .modal-close-icon:active {
-    color: var(--orange);
-    fill: var(--orange);
+    transform: rotate(90deg);
   }
 
   .is-hidden {
@@ -294,7 +318,6 @@
     height: 373.55px;
     margin-left: 36px;
     margin-top: 40px;
-    border: solid 1px black;
   }
 
   .movie-container {
@@ -325,14 +348,19 @@
     margin-bottom: 8px;
   }
 
+  .movie-descr:last-child {
+    margin-bottom: 20px;
+  }
+
   .movie-about-par {
     width: 264px;
-    height: 260px;
+    max-height: 236px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 12px;
     line-height: 1.66666;
     color: #000000;
+    margin-bottom: 20px;
   }
 
   .modal-buttons {
@@ -438,10 +466,6 @@
   }
   .modal-close-btn {
     display: flex;
-    background: none;
-    fill: none;
-    stroke: none;
-    stroke-width: 2px;
     justify-content: center;
     min-height: 24px;
     min-width: 24px;
@@ -463,7 +487,8 @@
   }
 
   .modal-close-icon {
-    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
     stroke-width: 2px;
   }
 
@@ -471,6 +496,7 @@
   .modal-close-icon:active {
     color: var(--orange);
     fill: var(--orange);
+    transform: rotate(90deg);
   }
 
   .is-hidden {
@@ -485,12 +511,10 @@
 
   .movie-image {
     border-radius: 5px;
-
-    width: 375px;
+    width: 355px;
     height: 478px;
-    margin-left: 20px;
+    margin-left: 18px;
     margin-top: 30px;
-    border: solid 1px black;
   }
 
   .movie-container {
@@ -521,8 +545,8 @@
   }
 
   .movie-about-par {
-    width: 391px;
-    height: 184px;
+    width: 375px;
+    max-height: 184px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 12px;
@@ -537,10 +561,12 @@
 
   .modal-buttons button {
     margin-right: 10px;
+    margin-left: 4px;
   }
 
   .modal-buttons button:last-child {
     margin-right: 0;
+    margin-left: 5px;
   }
 
   .watched-button {
