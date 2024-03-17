@@ -1,13 +1,14 @@
 <!--div class movie-backdrop start-->
-<div class="movie-backdrop is-hidden">
-  <div class="movie-modal is-hidden">
-    <button type="button" class="modal-close-btn">
+<div class="movie-backdrop is-hidden" data-modal>
+  <div class="movie-modal">
+    <button type="button" class="modal-close-btn" data-modal-close>
       <svg class="modal-close-icon" width="24" height="24">
         <use href="/src/images/icons.svg#icon-close"></use>
       </svg>
     </button>
 
-    <div class="movie-image"></div>
+    <img class="movie-image" />
+
     <div class="movie-container">
       <h2 class="movie-title"></h2>
       <!--extra div for descr and values together-->
@@ -19,7 +20,12 @@
           <p class="movie-descr">Genre</p>
         </div>
         <!--extra div for values from API-->
-        <div class="movie-descr-values"></div>
+        <div class="movie-descr-values">
+          <p class="total-vote"><span class="average-rate">/</span>:D</p>
+          <p class="movie-popularity">up</p>
+          <p class="movie-original-title">up</p>
+          <p class="movie-genre"></p>
+        </div>
       </div>
       <div class="movie-about">
         <!--word ABOUT is constant -->

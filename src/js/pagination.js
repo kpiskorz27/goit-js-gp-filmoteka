@@ -45,7 +45,7 @@ export function renderMovieCard(movie) {
   const movieItem = document.createElement('div');
   movieItem.classList.add('movie-item');
   movieItem.style.cursor = 'pointer';
-  movieItem.setAttribute('data-modal-open', '');
+  movieItem.setAttribute('data-modal', '');
   movieItem.setAttribute('data-id', movie.id);
 
   const moviePoster = document.createElement('img');
@@ -56,8 +56,13 @@ export function renderMovieCard(movie) {
     moviePoster.src = imageOne;   // jesli sciezka obrazu nie jest dostepna uzyj zimportowanego obrazu, Bartosz K
     moviePoster.alt = 'no image';
   }
-  movieItem.appendChild(moviePoster); 
-
+  moviePoster.alt = movie.title;
+  moviePoster.onerror = function (event) {
+    if (event.type === 'error' && event.target.src.startsWith('https://image.tmdb.org')) {
+      event.target.src = '/image-one.png';
+    }
+  };
+  movieItem.appendChild(moviePoster);
 
   const contentWrapper = document.createElement('div'); // Nowy div z zawartością p, Bartosz K
   contentWrapper.classList.add('content-wrapper');
@@ -113,16 +118,16 @@ function scrollToTop() {
 }
 
 async function loadMoviesPage(page) {
-  if (!currentSearchKeyword) { 
+  if (!currentSearchKeyword) {
     const { movies, totalPages } = await getPopularMovies(page); //jeśli nie istnieje wyszukiwana fraza, to ładuj popularne filmy, Bartosz K
     displayMovies(movies);
     renderPagination(totalPages, page);
-    scrollToTop(); 
+    scrollToTop();
   } else {
-    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie 
+    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie
     displayMovies(movies);
     renderPagination(totalPages, page);
-    scrollToTop(); 
+    scrollToTop();
   }
 }
 
@@ -216,6 +221,7 @@ function renderPagination(totalPages, currentPage) {
     const lastPage = Math.min(endPage + increment, totalPages);
 
     const lastPageButton = document.createElement('button');
+    lastPageButton.style.cursor = 'pointer';
     lastPageButton.textContent = lastPage;
     lastPageButton.classList.add('page-button');
     lastPageButton.addEventListener('click', () => {
@@ -268,7 +274,7 @@ async function searchMovies(keyword, page = 1) {
 function toggleNotification(flag) {
   const notifyEl = document.getElementById('error-message');
   if (flag) {
-    notifyEl.style.opacity = '1'; 
+    notifyEl.style.opacity = '1';
   } else {
     notifyEl.style.opacity = '0';
   }
@@ -285,17 +291,17 @@ async function handleSearch(keyword, page = 1) {
     currentSearchKeyword = ''; //odswieza wyszukiwanie po nacisnieciu na przycisk paginacji, Bartosz K
     document.querySelector('.search-input').value = ''; // czysci wyszukiwarke z nieznalezionego tytulu, Bartosz K
   } else {
-    toggleNotification(false); 
+    toggleNotification(false);
     displayMovies(movies);
     renderPagination(totalPages, page);
   }
-  }
 
 }
-document.querySelector('.search-form').addEventListener('submit', function (event) {
-  event.preventDefault();
-  const keyword = document.querySelector('.search-input').value;
-  handleSearch(keyword, 1);
-});
-
-
+const searchForm = document.querySelector('.search-form');
+if (searchForm) {
+  searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const keyword = document.querySelector('.search-input').value;
+    handleSearch(keyword, 1);
+  });
+}
