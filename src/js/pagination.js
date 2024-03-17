@@ -132,7 +132,7 @@ window.addEventListener('load', main);
 
 // PAGINACJA //
 
-function renderPagination(totalPages, currentPage) {
+export function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
 

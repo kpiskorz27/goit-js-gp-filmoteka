@@ -23,7 +23,7 @@ export function loadFromLibrary(key) {
 }
 
 export function renderMovieCard(movieData) {
-  
+  console.log(movieData);
     const markup = movieData.map(({ poster_path, title, id, genres, release_date, vote_average }) => {
         let genresText;
         if (genres.length > 2) {
