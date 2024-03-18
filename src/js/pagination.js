@@ -134,15 +134,14 @@ async function loadMoviesPage(page) {
   }
 }
 async function main() {
-  const subdirectory = '/goit-js-gp-filmoteka';
   if (
     window.location.pathname.includes('/index.html') ||
     window.location.pathname === '/' ||
-    window.location.href === 'https://kpiskorz27.github.io' + subdirectory + '/'
-  ) {
+    window.location.pathname === 'https://kpiskorz27.github.io/goit-js-gp-filmoteka/'
+  )
     loadMoviesPage(1);
-  }
 }
+
 window.addEventListener('load', main);
 
 // PAGINACJA //
