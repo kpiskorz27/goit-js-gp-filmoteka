@@ -2,7 +2,7 @@ const movieContainer = document.querySelector('.film-list');
 const paginationContainer = document.querySelector('.pagination');
 
 window.addEventListener('load', async () => {
-  allMovies = [];
+  let allMovies = [];
 
   if (JSON.parse(localStorage.getItem('queue')) || JSON.parse(localStorage.getItem('watched'))) {
     const movieOnQueue = await loadFromLibrary('queue');
