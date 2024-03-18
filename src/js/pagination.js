@@ -137,7 +137,7 @@ async function main() {
   if (
     window.location.pathname.includes('/index.html') ||
     window.location.pathname === '/' ||
-    window.location.pathname === 'https://kpiskorz27.github.io/goit-js-gp-filmoteka/'
+    window.location.href === 'https://kpiskorz27.github.io/goit-js-gp-filmoteka/'
   )
     loadMoviesPage(1);
 }
