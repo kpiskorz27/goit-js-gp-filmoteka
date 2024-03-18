@@ -29,7 +29,7 @@ export function loadFromLibrary(key) {
 
 export function renderMovieCard(movieData) {
   if (movieData.length === 0) {
-    movieContainer.innerHTML = 'Sorry, there are no films in your LIBRARY';
+    movieContainer.innerHTML = 'Sorry, there are no films in your LIBRARY.';
     return;
   }
   const moviesToRender = movieData.slice(0, 9);
