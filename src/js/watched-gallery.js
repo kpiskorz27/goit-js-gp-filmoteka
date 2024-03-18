@@ -1,4 +1,4 @@
-import { loadFromLibrary } from "./library";
+//import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
 const filmsPerPage = 18;
@@ -10,6 +10,7 @@ const watchedBtn = document.querySelector("#watchedButton");
 const queueBtn = document.querySelector("#gueueButton");
 const movieContainer = document.querySelector(".film-list");
 
+
 watchedBtn.addEventListener("click", async() => {
     loadMoviesPage(1);
     queueBtn.classList.remove('active');
@@ -17,20 +18,21 @@ watchedBtn.addEventListener("click", async() => {
 });
 
 function loadMoviesPage(page) {
-    movieContainer.innerHTML = "";
-    if (JSON.parse(localStorage.getItem("watched"))) {
-          const movieOnWatched = loadFromLibrary("watched");
-          const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
-          let currentPage = page || 1;
-          let startIndex = (currentPage - 1) * filmsPerPage;
-          let endIndex = startIndex + filmsPerPage;
-          let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
-          renderMovieCard(moviesOnPage); 
-          renderPagination(totalPagesCount, currentPage);
-    }
-    else {
-        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your watched");
-    }
+  movieContainer.innerHTML = "";
+  const movieOnWatched = JSON.parse(localStorage.getItem("watched"));
+  if (movieOnWatched && movieOnWatched.length > 0) {
+      const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
+      let currentPage = page || 1;
+      let startIndex = (currentPage - 1) * filmsPerPage;
+      let endIndex = startIndex + filmsPerPage;
+      let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
+      renderMovieCard(moviesOnPage);
+      renderPagination(totalPagesCount, currentPage);
+  } else {
+      movieContainer.insertAdjacentHTML("beforeend", "Sorry, there are no films in your watched list.");
+      const paginationContainer = document.querySelector('.pagination');
+      paginationContainer.style.display = 'none';
+  }
 }
 
 function renderPagination(totalPages, currentPage) {

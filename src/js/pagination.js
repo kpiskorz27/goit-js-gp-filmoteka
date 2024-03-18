@@ -138,7 +138,9 @@ async function loadMoviesPage(page) {
   }
 }
 async function main() {
-  loadMoviesPage(1);
+  if (window.location.pathname === '/index.html'|| window.location.pathname === '/') { // Sprawdzenie czy aktualna ścieżka to /index.html lub strona główna po załadowaniu strony. Tylko tam ma ładować filmy z API.
+    loadMoviesPage(1);
+  }
 }
 window.addEventListener('load', main);
 
