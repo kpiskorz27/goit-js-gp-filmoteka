@@ -4,6 +4,8 @@ import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z ass
 
 let currentSearchKeyword = '';
 
+
+
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -114,6 +116,7 @@ function scrollToTop() {
 
 
 //Ładowanie filmow na stronie//
+
 async function loadMoviesPage(page) {
   if (!currentSearchKeyword) { //jeśli nie istnieje wyszukiwana fraza
     if (window.location.pathname === '/my-library.html') {
@@ -153,6 +156,7 @@ export function renderPagination(totalPages, currentPage) {
   const visiblePages = 5;
   const maxButtonsToShow = 1000;
   const increment = 15;
+  
 
   let startPage = 1;
   let endPage = Math.min(startPage + visiblePages - 1, totalPages);
