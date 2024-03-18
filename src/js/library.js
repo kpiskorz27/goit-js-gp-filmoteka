@@ -10,7 +10,7 @@ window.addEventListener('load', async () => {
     allMovies = [...movieOnQueue, ...movieOnWatched];
     renderMovieCard(allMovies);
   } else {
-    movieContainer.innerHTML = 'Sorry, there are no films in your library';
+    movieContainer.innerHTML = 'Sorry, there are no films in your LIBRARY.';
   }
 
   renderPagination(allMovies.length, 1);
@@ -29,10 +29,10 @@ export function loadFromLibrary(key) {
 
 export function renderMovieCard(movieData) {
   if (movieData.length === 0) {
-    movieContainer.innerHTML = 'Sorry, there are no films in your library';
+    movieContainer.innerHTML = 'Sorry, there are no films in your LIBRARY';
     return;
   }
-  const moviesToRender = movieData.slice(0, 10);
+  const moviesToRender = movieData.slice(0, 9);
   const markup = moviesToRender
     .map(movie => {
       const genres = movie.genres || []; // czy gatunki są zdefiniowane
@@ -68,7 +68,7 @@ export function renderMovieCard(movieData) {
 //Renderowanie paginacji dla library//
 
 function renderPagination(totalItems, currentPage) {
-  const itemsPerPage = 10; // Zmieniłem na 10, ponieważ maksymalnie 10 filmów na stronie
+  const itemsPerPage = 9; // Zmieniłem na 10, ponieważ maksymalnie 10 filmów na stronie
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   paginationContainer.innerHTML = '';
