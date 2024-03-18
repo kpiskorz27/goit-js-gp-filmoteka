@@ -134,12 +134,12 @@ async function loadMoviesPage(page) {
   }
 }
 async function main() {
+  const subdirectory = '/goit-js-gp-filmoteka';
   if (
     window.location.pathname.includes('/index.html') ||
     window.location.pathname === '/' ||
-    window.location.pathname === 'https://kpiskorz27.github.io/goit-js-gp-filmoteka/'
+    window.location.href === 'https://kpiskorz27.github.io' + subdirectory + '/'
   ) {
-    // Sprawdzenie czy aktualna ścieżka to /index.html lub strona główna po załadowaniu strony. Tylko tam ma ładować filmy z API.
     loadMoviesPage(1);
   }
 }
