@@ -1,4 +1,4 @@
-import { loadFromLibrary } from "./library";
+//import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
 const filmsPerPage = 10;
@@ -25,18 +25,19 @@ function loadMoviesPage(page) {
           currentPage = page; 
           let startIndex = (currentPage - 1) * filmsPerPage;
           let endIndex = startIndex + filmsPerPage;
-          let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
+          let moviesOnPage = movieOnQueue.slice(startIndex, endIndex);
           renderMovieCard(moviesOnPage); 
           renderPagination(totalPagesCount, currentPage);
     }
     else {
-        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your watched");
+        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your queue");
+        const paginationContainer = document.querySelector('.pagination');
+        paginationContainer.style.display = 'none';
     }
 }
 
 
 //renderowanie paginacji
-
 
 function renderPagination(totalPages, currentPage) {
     const paginationContainer = document.querySelector('.pagination');
@@ -143,7 +144,8 @@ function renderPagination(totalPages, currentPage) {
     });
   
     paginationContainer.appendChild(lastPageButton);
+
 }
 
-
 loadMoviesPage(currentPage);
+

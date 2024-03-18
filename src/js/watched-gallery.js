@@ -1,4 +1,4 @@
-import { loadFromLibrary } from "./library";
+//import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
 const filmsPerPage = 10;
@@ -9,6 +9,7 @@ const watchedBtn = document.querySelector("#watchedButton");
 const queueBtn = document.querySelector("#gueueButton");
 const movieContainer = document.querySelector(".film-list");
 
+
 watchedBtn.addEventListener("click", async() => {
     loadMoviesPage(1);
     queueBtn.classList.remove('active');
@@ -16,6 +17,7 @@ watchedBtn.addEventListener("click", async() => {
 });
 
 function loadMoviesPage(page) {
+
     movieContainer.innerHTML = "";
     if (JSON.parse(localStorage.getItem("watched"))) {
           const movieOnWatched = loadFromLibrary("watched");
