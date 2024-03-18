@@ -16,7 +16,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 280px;
-  max-height: 940px;
+  height: 100%;
   border-radius: 0px;
   background: #fff;
   cursor: default;
@@ -76,6 +76,8 @@
 }
 
 .movie-image {
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 5px;
   width: 240px;
   height: 357px;
@@ -104,7 +106,7 @@
 }
 
 .movie-description {
-  margin-right: 83px;
+  margin-right: 39px;
 }
 
 .movie-descr-values p {
@@ -186,12 +188,14 @@
 }
 
 .watched-button {
-  background: #ff6b01;
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   display: flex;
   align-items: center;
   padding: 10px 10px;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   width: 110px;
   height: 44px;
   justify-content: center;
@@ -201,18 +205,16 @@
   line-height: 1.33333;
   text-transform: uppercase;
   text-align: center;
-  color: #fff;
   border-radius: 5px;
-  border: none;
-  fill: white;
+  border: solid 1px black;
   cursor: pointer;
 }
 
 .watched-button:hover,
 .watched-button:focus {
-  background-color: var(--light-orange);
-  color: #ff6b01;
-  border: solid 1px black;
+  background-color: #ff6b01;
+  color: #fff;
+  border: none;
 }
 
 .queue-button {
@@ -220,7 +222,9 @@
   display: flex;
   align-items: center;
   padding: 10px 10px;
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   width: 110px;
   height: 44px;
   justify-content: center;
@@ -241,6 +245,7 @@
 .queue-button:focus {
   background-color: #ff6b01;
   color: white;
+  border: none;
 }
 
 .movie-details {
@@ -325,8 +330,9 @@
   }
 
   .movie-image {
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 5px;
-
     width: 264px;
     height: 373.55px;
     margin-left: 36px;
@@ -390,12 +396,14 @@
   }
 
   .watched-button {
-    background: #ff6b01;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     display: flex;
     align-items: center;
     padding: 10px 10px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     width: 125px;
     height: 44px;
     justify-content: center;
@@ -405,27 +413,26 @@
     line-height: 1.33333;
     text-transform: uppercase;
     text-align: center;
-    color: #fff;
     border-radius: 5px;
-    border: none;
-    fill: white;
+    border: solid 1px black;
     cursor: pointer;
   }
 
   .watched-button:hover,
   .watched-button:focus {
-    background-color: var(--light-orange);
-    color: #ff6b01;
-    border: solid 1px black;
+    background-color: #ff6b01;
+    color: #fff;
+    border: none;
   }
 
   .queue-button {
     background-color: white;
-
     display: flex;
     align-items: center;
     padding: 10px 10px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     width: 125px;
     height: 44px;
     justify-content: center;
@@ -446,6 +453,7 @@
   .queue-button:focus {
     background-color: #ff6b01;
     color: white;
+    border: none;
   }
 }
 
@@ -523,6 +531,8 @@
   }
 
   .movie-image {
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 5px;
     width: 355px;
     height: 478px;
@@ -583,12 +593,14 @@
   }
 
   .watched-button {
-    background: #ff6b01;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     display: flex;
     align-items: center;
     padding: 10px 10px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     width: 136px;
     height: 44px;
     justify-content: center;
@@ -598,27 +610,26 @@
     line-height: 1.33333;
     text-transform: uppercase;
     text-align: center;
-    color: #fff;
     border-radius: 5px;
-    border: none;
-    fill: white;
+    border: solid 1px black;
     cursor: pointer;
   }
 
   .watched-button:hover,
   .watched-button:focus {
-    background-color: var(--light-orange);
-    color: #ff6b01;
-    border: solid 1px black;
+    background-color: #ff6b01;
+    color: #fff;
+    border: none;
   }
 
   .queue-button {
     background-color: white;
-
     display: flex;
     align-items: center;
     padding: 10px 10px;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     width: 136px;
     height: 44px;
     justify-content: center;
@@ -639,5 +650,6 @@
   .queue-button:focus {
     background-color: #ff6b01;
     color: white;
+    border: none;
   }
 }
