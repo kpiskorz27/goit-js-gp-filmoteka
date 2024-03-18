@@ -1,34 +1,24 @@
 const addToQueueBtn = document.querySelector('.queue-button');
 const modal = document.querySelector('.movie-modal');
 
-let moviesOnQueue = JSON.parse(localStorage.getItem('queue'));
-if (!Array.isArray(moviesOnQueue)) {
-  moviesOnQueue = [];
-}
-const movie = {
-  poster_path: '/hu40Uxp9WtpL34jv3zyWLb5zEVY.jpg',
-  genres: [
-    { id: 28, name: 'Horror' },
-    { id: 27, name: 'Dramat' },
-    { id: 80, name: 'Crime' },
-  ],
-  id: 872585,
-  release_date: '2024-01-18',
-  vote_average: 5.444,
-  title: 'No Way Up',
-};
-
 addToQueueBtn.addEventListener('click', () => {
-  moviesOnQueue.push(movie);
-  console.log(moviesOnQueue);
-  addToLibrary('queue', moviesOnQueue);
+  const movie = getMovieDataFromSessionStorage();
+  if (movie) {
+    addToQueue(movie);
+    console.log('Movie added to queue:', movie);
+  } else {
+    console.log('No movie data found in session storage.');
+  }
 });
 
-export const addToLibrary = (key, value) => {
-  try {
-    const stringifyFilm = JSON.stringify(value);
-    localStorage.setItem(key, stringifyFilm);
-  } catch (error) {
-    console.log(error);
-  }
-};
+function getMovieDataFromSessionStorage() {
+  const sessionKey = 'currentMovie';
+  const movieData = sessionStorage.getItem(sessionKey);
+  return movieData ? JSON.parse(movieData) : null;
+}
+
+function addToQueue(movie) {
+  let moviesOnQueue = JSON.parse(localStorage.getItem('queue')) || [];
+  moviesOnQueue.push(movie);
+  localStorage.setItem('queue', JSON.stringify(moviesOnQueue));
+}
