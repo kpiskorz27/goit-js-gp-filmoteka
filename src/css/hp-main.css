@@ -81,6 +81,10 @@
     width: 40px;
     border-radius: 5px;
   }
+
+  .page-button:hover{
+    background-color: rgba(92, 92, 92, 0.301);
+  }
   
   .ellipsis-span {
     margin-bottom: 6px;

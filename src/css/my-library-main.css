@@ -28,6 +28,10 @@
   color: var(--orange);
 }
 
+.movie-item img{
+  cursor: pointer;
+}
+
 .film-container-library .main-rating {
   margin-left: 5px;
   width: 36px;
