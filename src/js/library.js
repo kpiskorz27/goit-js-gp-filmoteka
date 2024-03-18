@@ -35,13 +35,15 @@ export function renderMovieCard(movieData) {
     }
     const moviesToRender = movieData.slice(0, 10);
     const markup = moviesToRender.map(movie => {
-        const genres = movie.genres || []; // Sprawdzamy, czy gatunki są zdefiniowane
+        const genres = movie.genres || []; // czy gatunki są zdefiniowane
         let genresText;
+
         if (genres.length > 2) {
-            genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}, Other`;
+            genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}, Others`;
         } else {
-            genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}`;
-        };
+            genresText = genres.map(genre => genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name).join(', ');
+        }
+
         return `<div class="movie-item" data-modal-open data-id="${movie.id}">
             <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" loading="lazy" />
             <h2>${movie.title}</h2>

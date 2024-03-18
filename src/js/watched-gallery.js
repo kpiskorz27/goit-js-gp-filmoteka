@@ -1,10 +1,9 @@
 //import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
-const filmsPerPage = 18;
+const filmsPerPage = 10;
 let currentPage = 1;
-let moviesOnPage = [];
-let totalPagesCount = 0;
+
 
 const watchedBtn = document.querySelector("#watchedButton");
 const queueBtn = document.querySelector("#gueueButton");
@@ -18,22 +17,26 @@ watchedBtn.addEventListener("click", async() => {
 });
 
 function loadMoviesPage(page) {
-  movieContainer.innerHTML = "";
-  const movieOnWatched = JSON.parse(localStorage.getItem("watched"));
-  if (movieOnWatched && movieOnWatched.length > 0) {
-      const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
-      let currentPage = page || 1;
-      let startIndex = (currentPage - 1) * filmsPerPage;
-      let endIndex = startIndex + filmsPerPage;
-      let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
-      renderMovieCard(moviesOnPage);
-      renderPagination(totalPagesCount, currentPage);
-  } else {
-      movieContainer.insertAdjacentHTML("beforeend", "Sorry, there are no films in your watched list.");
-      const paginationContainer = document.querySelector('.pagination');
-      paginationContainer.style.display = 'none';
-  }
+
+    movieContainer.innerHTML = "";
+    if (JSON.parse(localStorage.getItem("watched"))) {
+          const movieOnWatched = loadFromLibrary("watched");
+          const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
+          currentPage = page;
+          let startIndex = (currentPage - 1) * filmsPerPage;
+          let endIndex = startIndex + filmsPerPage;
+          let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
+          renderMovieCard(moviesOnPage); 
+          renderPagination(totalPagesCount, currentPage);
+    }
+    else {
+        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your watched");
+    }
 }
+
+
+//renderowanie paginacji 
+
 
 function renderPagination(totalPages, currentPage) {
     const paginationContainer = document.querySelector('.pagination');
@@ -66,7 +69,8 @@ function renderPagination(totalPages, currentPage) {
     firstPageButton.style.cursor = 'pointer';
     firstPageButton.classList.add('page-button', 'first-button');
     firstPageButton.addEventListener('click', () => {
-      loadMoviesPage(currentPage - 1);
+      loadMoviesPage(1);
+      window.scroll({ top: 0, behavior: 'smooth' });
     });
     paginationContainer.appendChild(firstPageButton);
   
@@ -98,6 +102,7 @@ function renderPagination(totalPages, currentPage) {
       }
       pageButton.addEventListener('click', () => {
         loadMoviesPage(page);
+        window.scroll({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(pageButton);
     }
@@ -118,6 +123,7 @@ function renderPagination(totalPages, currentPage) {
       lastPageButton.classList.add('page-button');
       lastPageButton.addEventListener('click', () => {
         loadMoviesPage(lastPage);
+        window.scroll({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(lastPageButton);
     }
@@ -133,7 +139,10 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.addEventListener('click', () => {
       const nextPage = Math.min(currentPage + 1, totalPages);
       loadMoviesPage(nextPage);
+      window.scroll({ top: 0, behavior: 'smooth' });
     });
   
     paginationContainer.appendChild(lastPageButton);
   }
+
+  loadMoviesPage(currentPage);

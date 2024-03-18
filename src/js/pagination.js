@@ -118,7 +118,7 @@ async function loadMoviesPage(page) {
     if (window.location.pathname === '/my-library.html') {
       const movies = [];
       displayMovies(movies);
-      renderPagination(1, 1); //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow z watched i queue), Bartosz K
+      renderPagination(1, 1); //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
       scrollToTop();
     } else {
       const { movies, totalPages } = await getPopularMovies(page); //to ładuj popularne filmy, Bartosz K

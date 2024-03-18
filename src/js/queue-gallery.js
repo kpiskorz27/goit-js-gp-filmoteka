@@ -1,10 +1,8 @@
 //import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
-const filmsPerPage = 18;
-let currentPage = 1;
-let moviesOnPage = [];
-let totalPagesCount = 0;
+const filmsPerPage = 10;
+let currentPage = 1; 
 
 const queueBtn = document.querySelector("#gueueButton");
 const watchedBtn = document.querySelector("#watchedButton");
@@ -16,12 +14,15 @@ queueBtn.addEventListener("click", async() => {
     watchedBtn.classList.remove('active');
 });
 
+
+//ładowanie strony 
+
 function loadMoviesPage(page) {
     movieContainer.innerHTML = "";
-    const movieOnQueue = JSON.parse(localStorage.getItem("queue"));
-    if (movieOnQueue && movieOnQueue.length > 0) {
-          const totalPagesCount = Math.ceil(movieOnQueue.length / filmsPerPage);
-          let currentPage = page || 1;
+    if (JSON.parse(localStorage.getItem("queue"))) {
+          const movieOnWatched = loadFromLibrary("queue");
+          const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
+          currentPage = page; 
           let startIndex = (currentPage - 1) * filmsPerPage;
           let endIndex = startIndex + filmsPerPage;
           let moviesOnPage = movieOnQueue.slice(startIndex, endIndex);
@@ -34,6 +35,9 @@ function loadMoviesPage(page) {
         paginationContainer.style.display = 'none';
     }
 }
+
+
+//renderowanie paginacji
 
 function renderPagination(totalPages, currentPage) {
     const paginationContainer = document.querySelector('.pagination');
@@ -66,7 +70,8 @@ function renderPagination(totalPages, currentPage) {
     firstPageButton.style.cursor = 'pointer';
     firstPageButton.classList.add('page-button', 'first-button');
     firstPageButton.addEventListener('click', () => {
-      loadMoviesPage(currentPage - 1);
+      loadMoviesPage(1);
+      window.scroll({ top: 0, behavior: 'smooth' });
     });
     paginationContainer.appendChild(firstPageButton);
   
@@ -98,6 +103,7 @@ function renderPagination(totalPages, currentPage) {
       }
       pageButton.addEventListener('click', () => {
         loadMoviesPage(page);
+        window.scroll({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(pageButton);
     }
@@ -118,6 +124,7 @@ function renderPagination(totalPages, currentPage) {
       lastPageButton.classList.add('page-button');
       lastPageButton.addEventListener('click', () => {
         loadMoviesPage(lastPage);
+        window.scroll({ top: 0, behavior: 'smooth' });
       });
       paginationContainer.appendChild(lastPageButton);
     }
@@ -133,7 +140,12 @@ function renderPagination(totalPages, currentPage) {
     lastPageButton.addEventListener('click', () => {
       const nextPage = Math.min(currentPage + 1, totalPages);
       loadMoviesPage(nextPage);
+      window.scroll({ top: 0, behavior: 'smooth' });
     });
   
     paginationContainer.appendChild(lastPageButton);
-  }
+
+}
+
+loadMoviesPage(currentPage);
+
