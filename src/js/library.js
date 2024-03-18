@@ -33,13 +33,13 @@ export function renderMovieCard(movieData) {
         movieContainer.innerHTML = "Sorry, there are no films in your library";
         return;
     }
-    const moviesToRender = movieData.slice(0, 10); // Render only 10 movies per page
+    const moviesToRender = movieData.slice(0, 10); 
     const markup = moviesToRender.map(({ poster_path, title, id, genres, release_date, vote_average }) => {
         let genresText;
         if (genres.length > 2) {
-            genresText = `${genres[0].name}, ${genres[1].name}, Other`;
+            genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}, Other`;
         } else {
-            genresText = `${genres[0].name}, ${genres[1].name}`;
+            genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}`;
         };
         return `<div class="movie-item" data-modal-open data-id="${id}">
             <img src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}" loading="lazy" />
