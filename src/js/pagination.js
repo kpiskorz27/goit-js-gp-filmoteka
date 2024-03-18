@@ -4,6 +4,8 @@ import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z ass
 
 let currentSearchKeyword = '';
 
+
+
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -110,25 +112,40 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' }); // Funkcja przenosząca nas na góre strony (dodane w celu ulatwienia szukania filmow), Bartosz K
 }
 
+
+
+
+//Ładowanie filmow na stronie//
+
 async function loadMoviesPage(page) {
-  if (!currentSearchKeyword) {
-    const { movies, totalPages } = await getPopularMovies(page); //jeśli nie istnieje wyszukiwana fraza, to ładuj popularne filmy, Bartosz K
-    displayMovies(movies);
-    renderPagination(totalPages, page);
-    scrollToTop();
+  if (!currentSearchKeyword) { //jeśli nie istnieje wyszukiwana fraza
+    if (window.location.pathname === '/my-library.html') {
+      const movies = []; 
+      displayMovies(movies);
+      renderPagination(1, 1); //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow z watched i queue), Bartosz K
+      scrollToTop();
+    } else {
+      const { movies, totalPages } = await getPopularMovies(page); //to ładuj popularne filmy, Bartosz K
+      displayMovies(movies);
+      renderPagination(totalPages, page);
+      scrollToTop();
+    }
   } else {
-    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie
+    const { movies, totalPages } = await searchMovies(currentSearchKeyword, page); // w przeciwnym razie wyszukuj filmy po wpisanej frazie, Bartosz K
     displayMovies(movies);
     renderPagination(totalPages, page);
     scrollToTop();
   }
 }
-
 async function main() {
   loadMoviesPage(1);
 }
-
 window.addEventListener('load', main);
+
+
+
+
+
 
 // PAGINACJA //
 
@@ -139,6 +156,7 @@ export function renderPagination(totalPages, currentPage) {
   const visiblePages = 5;
   const maxButtonsToShow = 1000;
   const increment = 15;
+  
 
   let startPage = 1;
   let endPage = Math.min(startPage + visiblePages - 1, totalPages);
@@ -240,6 +258,11 @@ export function renderPagination(totalPages, currentPage) {
 
   paginationContainer.appendChild(lastPageButton);
 }
+
+
+
+
+//WYSZUKIWANIE FILMOW//
 
 async function searchMovies(keyword, page = 1) {
   const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(

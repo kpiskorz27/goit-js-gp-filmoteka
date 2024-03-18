@@ -16,7 +16,6 @@ function closeModal(event) {
   movieModal.classList.add('is-hidden');
   removeEventListeners();
 }
-
 function escExit(event) {
   const escKey = 'Escape';
   if (event.code === escKey) {
@@ -57,6 +56,7 @@ function cardSelection() {
           modalImg.setAttribute('src', cardPoster);
           getMovieDetails(movieId).then(movie => {
             console.log('Movie Details:', movie); // Log movie details
+            saveMovieToSessionStorage(movie); // zapisuje film do sesji, Bartosz K
             movieModalData(movie);
             openModal(event);
           });
@@ -90,4 +90,9 @@ function movieModalData(movie) {
   movieOriginalTitle.textContent = movie.original_title;
   movieGenre.textContent = genres;
   movieAbout.textContent = movie.overview;
+}
+
+function saveMovieToSessionStorage(movie) {  // film zapisywany jest do session storage, Bartosz K
+  const sessionKey = 'currentMovie';
+  sessionStorage.setItem(sessionKey, JSON.stringify(movie));
 }
