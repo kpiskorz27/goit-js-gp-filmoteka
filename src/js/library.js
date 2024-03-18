@@ -33,21 +33,22 @@ export function renderMovieCard(movieData) {
         movieContainer.innerHTML = "Sorry, there are no films in your library";
         return;
     }
-    const moviesToRender = movieData.slice(0, 10); 
-    const markup = moviesToRender.map(({ poster_path, title, id, genres, release_date, vote_average }) => {
+    const moviesToRender = movieData.slice(0, 10);
+    const markup = moviesToRender.map(movie => {
+        const genres = movie.genres || []; // Sprawdzamy, czy gatunki są zdefiniowane
         let genresText;
         if (genres.length > 2) {
             genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}, Other`;
         } else {
             genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name}`;
         };
-        return `<div class="movie-item" data-modal-open data-id="${id}">
-            <img src="https://image.tmdb.org/t/p/w500${poster_path}" alt="${title}" loading="lazy" />
-            <h2>${title}</h2>
+        return `<div class="movie-item" data-modal-open data-id="${movie.id}">
+            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}" loading="lazy" />
+            <h2>${movie.title}</h2>
             <div class="content-wrapper">
                 <p>${genresText}</p>
-                <p class="movie-year"> | ${new Date(release_date).getFullYear()}</p>
-                <p class="main-rating">${vote_average.toFixed(1)}</p>
+                <p class="movie-year"> | ${new Date(movie.release_date).getFullYear()}</p>
+                <p class="main-rating">${movie.vote_average.toFixed(1)}</p>
             </div>
         </div>`;
     }).join("");
@@ -56,10 +57,11 @@ export function renderMovieCard(movieData) {
 }
 
 
+
 //Renderowanie paginacji dla library//
 
 function renderPagination(totalItems, currentPage) {
-    const itemsPerPage = 20; 
+    const itemsPerPage = 10; // Zmieniłem na 10, ponieważ maksymalnie 10 filmów na stronie
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     
     paginationContainer.innerHTML = '';
