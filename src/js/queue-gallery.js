@@ -1,4 +1,4 @@
-import { loadFromLibrary } from "./library";
+//import { loadFromLibrary } from "./library";
 import { renderMovieCard } from "./library";
 
 const filmsPerPage = 18;
@@ -18,21 +18,22 @@ queueBtn.addEventListener("click", async() => {
 
 function loadMoviesPage(page) {
     movieContainer.innerHTML = "";
-    if (JSON.parse(localStorage.getItem("queue"))) {
-          const movieOnWatched = loadFromLibrary("queue");
-          const totalPagesCount = Math.ceil(movieOnWatched.length / filmsPerPage);
+    const movieOnQueue = JSON.parse(localStorage.getItem("queue"));
+    if (movieOnQueue && movieOnQueue.length > 0) {
+          const totalPagesCount = Math.ceil(movieOnQueue.length / filmsPerPage);
           let currentPage = page || 1;
           let startIndex = (currentPage - 1) * filmsPerPage;
           let endIndex = startIndex + filmsPerPage;
-          let moviesOnPage = movieOnWatched.slice(startIndex, endIndex);
+          let moviesOnPage = movieOnQueue.slice(startIndex, endIndex);
           renderMovieCard(moviesOnPage); 
           renderPagination(totalPagesCount, currentPage);
     }
     else {
-        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your watched");
+        movieContainer.insertAdjacentHTML("beforeend", "Sorry, there is no films in your queue");
+        const paginationContainer = document.querySelector('.pagination');
+        paginationContainer.style.display = 'none';
     }
 }
-
 
 function renderPagination(totalPages, currentPage) {
     const paginationContainer = document.querySelector('.pagination');
