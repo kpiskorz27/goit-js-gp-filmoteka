@@ -1,5 +1,7 @@
 const movieContainer = document.querySelector('.film-list');
 const paginationContainer = document.querySelector('.pagination');
+import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets
+
 
 window.addEventListener('load', async () => {
   let allMovies = [];
@@ -48,19 +50,17 @@ export function renderMovieCard(movieData) {
           .join(', ');
       }
 
-      return `<div class="movie-item" data-modal-open data-id="${movie.id}">
-            <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${
-        movie.title
-      }" loading="lazy" />
-            <h2>${movie.title}</h2>
-            <div class="content-wrapper">
-                <p>${genresText}</p>
-                <p class="movie-year"> | ${new Date(movie.release_date).getFullYear()}</p>
-                <p class="main-rating">${movie.vote_average.toFixed(1)}</p>
-            </div>
-        </div>`;
+      return `<div class="movie-item" data-modal-open data-id="${movie.id}"> 
+      <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : imageOne}" alt="${movie.title}" loading="lazy" /> 
+      <h2>${movie.title}</h2>
+      <div class="content-wrapper">
+          <p>${genresText}</p>
+          <p class="movie-year"> | ${new Date(movie.release_date).getFullYear()}</p>
+          <p class="main-rating">${movie.vote_average.toFixed(1)}</p>
+      </div>
+  </div>`;
     })
-    .join('');
+    .join(''); // tutaj tez niech dodaje imageOne jesli nie ma okladki, Bartosz K
 
   movieContainer.innerHTML = markup;
 }

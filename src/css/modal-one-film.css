@@ -11,7 +11,7 @@
 }
 
 .movie-modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -69,10 +69,6 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-}
-
-.is-hidden .movie-modal {
-  transform: translateY(100%);
 }
 
 .movie-image {
@@ -264,7 +260,7 @@
   }
 
   .movie-modal {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -320,9 +316,6 @@
     pointer-events: none;
   }
 
-  .is-hidden .movie-modal {
-    transform: translateY(100%);
-  }
 
   .movie-image {
     border-radius: 5px;
@@ -463,7 +456,7 @@
   }
 
   .movie-modal {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -518,9 +511,7 @@
     pointer-events: none;
   }
 
-  .is-hidden .movie-modal {
-    transform: translateY(100%);
-  }
+ 
 
   .movie-image {
     border-radius: 5px;
@@ -614,7 +605,6 @@
 
   .queue-button {
     background-color: white;
-
     display: flex;
     align-items: center;
     padding: 10px 10px;
@@ -639,5 +629,64 @@
   .queue-button:focus {
     background-color: #ff6b01;
     color: white;
+  }
+}
+
+
+
+
+/* przyciski usuwania, Bartosz K */
+
+
+.remove-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.remove-watched-button:hover,
+.remove-watched-button:focus {
+  background-color: #ff6b01;
+  color: white;
+}
+
+.remove-queue-button, .remove-watched-button {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100px;
+  height: 30px;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 8px;
+  line-height: 1.33333;
+  text-align: center;
+  color: black;
+  border-radius: 5px;
+  border: solid 1px black;
+  fill: white;
+  cursor: pointer;
+}
+
+.remove-queue-button:hover,
+.remove-queue-button:focus {
+  background-color: #ff6b01;
+  color: white;
+}
+
+
+@media (min-width: 1280px) {
+
+  .remove-buttons {
+    margin-left: 4px;
+    display: flex;
+    gap: 25px;
+  }
+
+  .remove-queue-button, .remove-watched-button {
+    width: 130px;
+    height: 35px;
+    font-size: 9px;
   }
 }
