@@ -557,7 +557,9 @@
     text-align: left;
     margin-bottom: 20px;
   }
-
+  .movie-description {
+    margin-right: 83px;
+  }
   .movie-descr {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
