@@ -3,11 +3,14 @@ const movieModal = document.querySelector('.movie-modal');
 const overlay = document.querySelector('.movie-backdrop');
 const closeBtn = document.querySelector('.modal-close-btn');
 const modalImg = document.querySelector('.movie-image');
-
-function openModal(event) {
+const loader = document.querySelector('.loader');
+const filmContainer = document.querySelector('.film-container');
+async function openModal(event) {
   event.preventDefault();
-  overlay.classList.remove('is-hidden');
-  movieModal.classList.remove('is-hidden');
+  setTimeout(() => {
+    overlay.classList.remove('is-hidden');
+    movieModal.classList.remove('is-hidden');
+  }, 200);
   closeBtn.addEventListener('click', closeModal);
 }
 function closeModal(event) {
@@ -92,7 +95,8 @@ function movieModalData(movie) {
   movieAbout.textContent = movie.overview;
 }
 
-function saveMovieToSessionStorage(movie) {  // film zapisywany jest do session storage, Bartosz K
+function saveMovieToSessionStorage(movie) {
+  // film zapisywany jest do session storage, Bartosz K
   const sessionKey = 'currentMovie';
   sessionStorage.setItem(sessionKey, JSON.stringify(movie));
 }
