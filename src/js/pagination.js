@@ -151,6 +151,71 @@ export function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
 
+  const isMobile = window.innerWidth < 768; // paginacja dla strony mobilnejm, Bartosz K
+
+  if (isMobile) { 
+    let startPage = currentPage > 2 ? currentPage - 2 : 1;
+    const endPage = Math.min(startPage + 4, totalPages); // maksymalnie ma wyswietlac sie tylko 5 przyciskow, Bartosz K
+
+    if (totalPages <= 5) {
+      endPage = totalPages;
+    } else if (currentPage > totalPages - 2) {
+      startPage = totalPages - 4;
+      endPage = totalPages;
+    }
+
+    const firstPageButton = document.createElement('button');
+    firstPageButton.innerHTML = `
+      <svg class="icon icon-arrow-left" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M25.333 16H6.666M16 25.333 6.667 16 16 6.667" style="stroke:var(--color2, #000)"/>
+      </svg>
+    `;
+    firstPageButton.style.cursor = 'pointer';
+    firstPageButton.classList.add('page-button', 'first-button');
+    if (currentPage > 1)
+      firstPageButton.addEventListener('click', () => {
+        loadMoviesPage(currentPage - 1);
+        toggleNotification(false);
+      });
+    paginationContainer.appendChild(firstPageButton);
+
+    for (let page = startPage; page <= endPage; page++) {
+      const pageButton = document.createElement('button');
+      pageButton.textContent = page;
+      pageButton.style.cursor = 'pointer';
+      pageButton.classList.add('page-button');
+      if (page === currentPage) {
+        pageButton.classList.add('active');
+      }
+      pageButton.addEventListener('click', () => {
+        loadMoviesPage(page);
+        toggleNotification(false);
+      });
+      paginationContainer.appendChild(pageButton);
+    }
+
+    if (endPage < totalPages) { 
+      const lastPageButton = document.createElement('button');
+      lastPageButton.innerHTML = `
+        <svg class="icon icon-arrow-right" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M6.667 16h18.667M16 25.333l9.333-9.333-9.333-9.333" style="stroke:var(--color2, #000)"/>
+        </svg>
+      `;
+      lastPageButton.classList.add('page-button', 'last-button');
+      lastPageButton.style.cursor = 'pointer';
+      lastPageButton.addEventListener('click', () => {
+        const nextPage = Math.min(currentPage + 1, totalPages);
+        loadMoviesPage(nextPage);
+        toggleNotification(false);
+      });
+      paginationContainer.appendChild(lastPageButton);
+    }
+  } 
+  
+  //paginacja dla tablet i desktop
+  
+  else { 
+
   const visiblePages = 5;
   const maxButtonsToShow = 1000;
   const increment = 15;
@@ -254,6 +319,7 @@ export function renderPagination(totalPages, currentPage) {
   });
 
   paginationContainer.appendChild(lastPageButton);
+}
 }
 
 //WYSZUKIWANIE FILMOW//
