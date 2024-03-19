@@ -1,14 +1,18 @@
 const apiKey = 'ddd78f0e80e0d30735adfd081ca2dc47';
 const apiUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`;
 import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets
-
+const loader = document.querySelector('.loader');
 let currentSearchKeyword = '';
 
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
+    loader.classList.remove('hidden');
     const response = await fetch(url);
     const data = await response.json();
+    setTimeout(() => {
+      loader.classList.add('hidden');
+    }, 500);
     return data;
   } catch (error) {
     console.error('Error while fetching movie details:', error);
@@ -16,13 +20,11 @@ export async function getMovieDetails(movieId) {
   }
 }
 
-const loader = document.querySelector('.loader');
-
 async function getPopularMovies(page = 1) {
   const urlWithPage = `${apiUrl}&page=${page}`;
   loader.classList.remove('hidden');
   try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 500));
     const response = await fetch(urlWithPage);
     const data = await response.json();
     const movies = data.results;
@@ -256,12 +258,13 @@ export function renderPagination(totalPages, currentPage) {
 }
 
 //WYSZUKIWANIE FILMOW//
-
+const filmContainer = document.querySelector('.film-container');
 async function searchMovies(keyword, page = 1) {
   const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(
     keyword,
   )}&page=${page}`;
   try {
+    filmContainer.classList.add('hidden');
     loader.classList.remove('hidden');
     const response = await fetch(url);
     const data = await response.json();
@@ -272,7 +275,10 @@ async function searchMovies(keyword, page = 1) {
         return { ...movie, ...details };
       }),
     );
-    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.classList.add('hidden');
+      filmContainer.classList.remove('hidden');
+    }, 500);
     return { movies: detailedMovies, totalPages: data.total_pages };
   } catch (error) {
     console.error('Error while searching movies:', error);
