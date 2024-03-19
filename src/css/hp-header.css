@@ -2,17 +2,18 @@
   display: flex;
   width: 320px;
   height: 216px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56));
 }
 
 @media only screen and (min-width: 768px) {
   .hp-header {
-    width: 704px;
+    width: 100%;
   }
 }
 
 @media only screen and (min-width: 1280px) {
   .hp-header {
-    width: 1216px;
+    width: 100%;
   }
 }
 
@@ -25,6 +26,7 @@
   padding: 44px 20px 44px 20px;
   width: 320px;
 }
+
 
 @media only screen and (min-width: 768px) {
   .header-container {
@@ -42,7 +44,7 @@
 
 @media only screen and (min-resolution: 2dppx) {
   .header-container {
-    background-image: url('../images/homepage/hp-header-mobile@x2.jpg');
+    background-image: url('../images/homepage/hp-header-mobile@x2.png');
   }
 }
 
@@ -54,13 +56,13 @@
 
 @media only screen and (min-width: 1280px) and (min-resolution: 2dppx) {
   .header-container {
-    background-image: url('../images/homepage/hp-header2@x2.jpg');
+    background-image: url('../images/homepage/header-desktop@2x-min.png');
   }
 }
 
 @media only screen and (min-width: 1280px) and (max-resolution: 1.99dppx) {
   .header-container {
-    background-image: url('../images/homepage/hp-header1.jpg');
+    background-image: url('../images/homepage/header-desktop@2x-min.png');
   }
 }
 
