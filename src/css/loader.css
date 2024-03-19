@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Anton');
+
 .loader {
-  padding: 10px;
-  position: absolute;
+  position: relative;
+  z-index: 1;
+  padding-top: 25px;
+  padding-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .hidden {
-  visibility: hidden;
+  display: none;
 }
+
 .loader__text {
   margin: 5px auto;
   color: #3d314a;
@@ -13,13 +21,14 @@
   letter-spacing: 1px;
   font-family: Anton, sans-serif;
 }
+
 .loader__filmstrip {
-  position: relative;
   width: 56px;
   height: 70px;
   background: #3d314a;
-  z-index: -1;
+  position: relative;
 }
+
 .loader__filmstrip:before,
 .loader__filmstrip:after {
   content: '';
@@ -28,12 +37,15 @@
   border-left: 5px dashed #ffffff;
   animation: roll 20ms infinite;
 }
+
 .loader__filmstrip:before {
   left: 5px;
 }
+
 .loader__filmstrip:after {
   right: 5px;
 }
+
 @keyframes roll {
   0% {
     top: 0px;
