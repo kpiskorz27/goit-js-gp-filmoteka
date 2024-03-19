@@ -641,6 +641,7 @@
 .remove-buttons {
   display: flex;
   gap: 20px;
+  margin-top: -20px;
 }
 
 .remove-watched-button:hover,
