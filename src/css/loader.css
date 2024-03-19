@@ -10,6 +10,29 @@
   align-items: center;
 }
 
+.loader_modal_container {
+  background-color: #ffffff7e;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backdrop-filter: blur(5px);
+  transition: backdrop-filter 100ms;
+}
+
+.loader_modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding-top: 25px;
+  padding-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .hidden {
   display: none;
 }

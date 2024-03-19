@@ -3,14 +3,14 @@ const movieModal = document.querySelector('.movie-modal');
 const overlay = document.querySelector('.movie-backdrop');
 const closeBtn = document.querySelector('.modal-close-btn');
 const modalImg = document.querySelector('.movie-image');
-const loader = document.querySelector('.loader');
-const filmContainer = document.querySelector('.film-container');
+const loaderModal = document.querySelector('.loader_modal_container');
 async function openModal(event) {
   event.preventDefault();
   setTimeout(() => {
     overlay.classList.remove('is-hidden');
     movieModal.classList.remove('is-hidden');
-  }, 200);
+    loaderModal.classList.remove('hidden');
+  }, 500);
   closeBtn.addEventListener('click', closeModal);
 }
 function closeModal(event) {
@@ -62,6 +62,9 @@ function cardSelection() {
             saveMovieToSessionStorage(movie); // zapisuje film do sesji, Bartosz K
             movieModalData(movie);
             openModal(event);
+            setTimeout(() => {
+              loaderModal.classList.add('hidden');
+            }, 1000);
           });
         }
       });
