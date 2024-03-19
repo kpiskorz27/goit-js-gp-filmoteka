@@ -2,9 +2,9 @@ const movieContainer = document.querySelector('.film-list');
 const paginationContainer = document.querySelector('.pagination');
 import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets
 
-
+let allMovies = [];
 window.addEventListener('load', async () => {
-  let allMovies = [];
+  
 
   if (JSON.parse(localStorage.getItem('queue')) || JSON.parse(localStorage.getItem('watched'))) {
     const movieOnQueue = await loadFromLibrary('queue');
