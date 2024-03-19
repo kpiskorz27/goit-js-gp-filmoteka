@@ -23,7 +23,6 @@
   transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
-  border: solid 1px black;
 }
 
 .modal-close-btn {
@@ -251,6 +250,10 @@
   text-transform: uppercase;
 }
 
+.remove-buttons {
+  justify-content: space-around;
+}
+
 @media (min-width: 768px) {
   .movie-backdrop {
     position: fixed;
@@ -270,14 +273,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 704px;
-    height: 552px;
+    height: 55%;
     border-radius: 0px;
     background: #fff;
     cursor: default;
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: row;
-    border: solid 1px black;
   }
 
   .modal-close-btn {
@@ -320,7 +322,6 @@
     visibility: hidden;
     pointer-events: none;
   }
-
 
   .movie-image {
     background-repeat: no-repeat;
@@ -476,7 +477,6 @@
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: row;
-    border: solid 1px black;
   }
   .modal-close-btn {
     display: flex;
@@ -518,8 +518,6 @@
     visibility: hidden;
     pointer-events: none;
   }
-
- 
 
   .movie-image {
     background-repeat: no-repeat;
@@ -645,13 +643,12 @@
     color: white;
     border: none;
   }
+  .remove-buttons {
+    justify-content: start;
+  }
 }
 
-
-
-
 /* przyciski usuwania, Bartosz K */
-
 
 .remove-buttons {
   display: flex;
@@ -665,7 +662,8 @@
   color: white;
 }
 
-.remove-queue-button, .remove-watched-button {
+.remove-queue-button,
+.remove-watched-button {
   background-color: white;
   display: flex;
   align-items: center;
@@ -691,16 +689,15 @@
   color: white;
 }
 
-
 @media (min-width: 1280px) {
-
   .remove-buttons {
     margin-left: 4px;
     display: flex;
-    gap: 25px;
+    gap: 27px;
   }
 
-  .remove-queue-button, .remove-watched-button {
+  .remove-queue-button,
+  .remove-watched-button {
     width: 130px;
     height: 35px;
     font-size: 9px;
