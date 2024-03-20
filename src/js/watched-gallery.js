@@ -39,20 +39,20 @@ function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
 
-  const visiblePages = 5;
+  const maxVisiblePages = 5;
   const maxButtonsToShow = 1000;
   const increment = 15;
 
-  let startPage = 1;
-  let endPage = Math.min(startPage + visiblePages - 1, totalPages);
+  let startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 1);
+  let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
 
-  if (totalPages > visiblePages) {
-    const half = Math.floor(visiblePages / 2);
-    startPage = Math.max(currentPage - half, 1);
-    endPage = startPage + visiblePages - 1;
-    if (endPage >= maxButtonsToShow) {
-      endPage = maxButtonsToShow;
-      startPage = Math.max(endPage - visiblePages + 1, 1);
+  if (totalPages > maxVisiblePages) {
+    if (currentPage <= Math.ceil(maxVisiblePages / 2)) {
+      startPage = 1;
+      endPage = maxVisiblePages;
+    } else if (currentPage >= totalPages - Math.floor(maxVisiblePages / 2)) {
+      startPage = totalPages - maxVisiblePages + 1;
+      endPage = totalPages;
     }
   }
 

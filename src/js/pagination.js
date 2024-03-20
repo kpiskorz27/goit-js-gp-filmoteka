@@ -5,6 +5,8 @@ const loader = document.querySelector('.loader');
 const footer = document.querySelector('footer');
 let currentSearchKeyword = '';
 
+
+
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -118,8 +120,7 @@ async function loadMoviesPage(page) {
     //jeśli nie istnieje wyszukiwana fraza
     if (window.location.pathname === '/my-library.html') {
       const movies = [];
-      displayMovies(movies);
-      renderPagination(1, 1); //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
+      displayMovies(movies);//w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
       scrollToTop();
     } else {
       const { movies, totalPages } = await getPopularMovies(page); //to ładuj popularne filmy, Bartosz K

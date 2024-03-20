@@ -68,7 +68,7 @@ export function renderMovieCard(movieData) {
 //Renderowanie paginacji dla library//
 
 function renderPagination(totalItems, currentPage) {
-  const itemsPerPage = 9; // Zmieniłem na 10, ponieważ maksymalnie 10 filmów na stronie
+  const itemsPerPage = 10; 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   paginationContainer.innerHTML = '';
@@ -90,8 +90,12 @@ function renderPagination(totalItems, currentPage) {
     });
   paginationContainer.appendChild(firstPageButton);
 
-  let startPage = 1;
+  let startPage = Math.max(1, currentPage - 2);
   let endPage = Math.min(startPage + 4, totalPages);
+
+  if (endPage - startPage < 4) {
+    startPage = Math.max(1, endPage - 4);
+  }
 
   for (let page = startPage; page <= endPage; page++) {
     const pageButton = document.createElement('button');
