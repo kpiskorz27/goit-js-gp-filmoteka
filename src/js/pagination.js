@@ -5,6 +5,8 @@ const loader = document.querySelector('.loader');
 const footer = document.querySelector('footer');
 let currentSearchKeyword = '';
 
+
+
 export async function getMovieDetails(movieId) {
   const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
   try {
@@ -117,8 +119,8 @@ async function loadMoviesPage(page) {
   if (!currentSearchKeyword) {
     //jeśli nie istnieje wyszukiwana fraza
     if (window.location.pathname === '/my-library.html') {
-      const movies = [];
-      displayMovies(movies); //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
+      const movies = []; //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
+      displayMovies(movies);
       scrollToTop();
     } else {
       const { movies, totalPages } = await getPopularMovies(page); //to ładuj popularne filmy, Bartosz K
@@ -149,9 +151,10 @@ window.addEventListener('load', main);
 export function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
+
   const isMobile = window.innerWidth < 768; // paginacja dla strony mobilnejm, Bartosz K
 
-  if (isMobile) {
+  if (isMobile) { 
     let startPage = currentPage > 2 ? currentPage - 2 : 1;
     let endPage = Math.min(startPage + 4, totalPages); // maksymalnie ma wyswietlac sie tylko 5 przyciskow, Bartosz K
 
@@ -192,7 +195,7 @@ export function renderPagination(totalPages, currentPage) {
       paginationContainer.appendChild(pageButton);
     }
 
-    if (endPage < totalPages) {
+    if (endPage < totalPages) { 
       const lastPageButton = document.createElement('button');
       lastPageButton.innerHTML = `
         <svg class="icon icon-arrow-right" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -208,114 +211,116 @@ export function renderPagination(totalPages, currentPage) {
       });
       paginationContainer.appendChild(lastPageButton);
     }
+  } 
+  
+  //paginacja dla tablet i desktop
+  
+  else { 
+
+  const visiblePages = 5;
+  const maxButtonsToShow = 1000;
+  const increment = 15;
+
+  let startPage = 1;
+  let endPage = Math.min(startPage + visiblePages - 1, totalPages);
+
+  if (totalPages > visiblePages) {
+    const half = Math.floor(visiblePages / 2);
+    startPage = Math.max(currentPage - half, 1);
+    endPage = startPage + visiblePages - 1;
+    if (endPage >= maxButtonsToShow) {
+      endPage = maxButtonsToShow;
+      startPage = Math.max(endPage - visiblePages + 1, 1);
+    }
   }
 
-  //paginacja dla tablet i desktop
-  else {
-    const visiblePages = 5;
-    const maxButtonsToShow = 1000;
-    const increment = 15;
-
-    let startPage = 1;
-    let endPage = Math.min(startPage + visiblePages - 1, totalPages);
-
-    if (totalPages > visiblePages) {
-      const half = Math.floor(visiblePages / 2);
-      startPage = Math.max(currentPage - half, 1);
-      endPage = startPage + visiblePages - 1;
-      if (endPage >= maxButtonsToShow) {
-        endPage = maxButtonsToShow;
-        startPage = Math.max(endPage - visiblePages + 1, 1);
-      }
-    }
-
-    const firstPageButton = document.createElement('button');
-    firstPageButton.innerHTML = `
+  const firstPageButton = document.createElement('button');
+  firstPageButton.innerHTML = `
     <svg class="icon icon-arrow-left" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M25.333 16H6.666M16 25.333 6.667 16 16 6.667" style="stroke:var(--color2, #000)"/>
     </svg>
 `;
 
-    firstPageButton.style.cursor = 'pointer';
-    firstPageButton.classList.add('page-button', 'first-button');
-    if (currentPage > 1)
-      //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
-      firstPageButton.addEventListener('click', () => {
-        loadMoviesPage(currentPage - 1);
-        toggleNotification(false);
-      });
-    paginationContainer.appendChild(firstPageButton);
+  firstPageButton.style.cursor = 'pointer';
+  firstPageButton.classList.add('page-button', 'first-button');
+  if (currentPage > 1)
+    //sprawdza czy aktualna strona nie jest pierwsza strone, zapobiega loopowi, Bartosz K
+    firstPageButton.addEventListener('click', () => {
+      loadMoviesPage(currentPage - 1);
+      toggleNotification(false);
+    });
+  paginationContainer.appendChild(firstPageButton);
 
-    if (startPage > 1) {
-      const firstPage = document.createElement('button');
-      firstPage.textContent = 1;
-      firstPage.style.cursor = 'pointer';
-      firstPage.classList.add('page-button');
-      firstPage.addEventListener('click', () => {
-        loadMoviesPage(1);
-        toggleNotification(false);
-      });
-      paginationContainer.appendChild(firstPage);
+  if (startPage > 1) {
+    const firstPage = document.createElement('button');
+    firstPage.textContent = 1;
+    firstPage.style.cursor = 'pointer';
+    firstPage.classList.add('page-button');
+    firstPage.addEventListener('click', () => {
+      loadMoviesPage(1);
+      toggleNotification(false);
+    });
+    paginationContainer.appendChild(firstPage);
 
-      if (startPage > 2) {
-        const ellipsis1 = document.createElement('span');
-        ellipsis1.textContent = '...';
-        ellipsis1.classList.add('ellipsis-span');
-        paginationContainer.appendChild(ellipsis1);
-      }
+    if (startPage > 2) {
+      const ellipsis1 = document.createElement('span');
+      ellipsis1.textContent = '...';
+      ellipsis1.classList.add('ellipsis-span');
+      paginationContainer.appendChild(ellipsis1);
+    }
+  }
+
+  for (let page = startPage; page <= endPage; page++) {
+    const pageButton = document.createElement('button');
+    pageButton.textContent = page;
+    pageButton.style.cursor = 'pointer';
+    pageButton.classList.add('page-button');
+    if (page === currentPage) {
+      pageButton.classList.add('active');
+    }
+    pageButton.addEventListener('click', () => {
+      loadMoviesPage(page);
+      toggleNotification(false);
+    });
+    paginationContainer.appendChild(pageButton);
+  }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      const ellipsis2 = document.createElement('span');
+      ellipsis2.textContent = '...';
+      ellipsis2.classList.add('ellipsis-span');
+      paginationContainer.appendChild(ellipsis2);
     }
 
-    for (let page = startPage; page <= endPage; page++) {
-      const pageButton = document.createElement('button');
-      pageButton.textContent = page;
-      pageButton.style.cursor = 'pointer';
-      pageButton.classList.add('page-button');
-      if (page === currentPage) {
-        pageButton.classList.add('active');
-      }
-      pageButton.addEventListener('click', () => {
-        loadMoviesPage(page);
-        toggleNotification(false);
-      });
-      paginationContainer.appendChild(pageButton);
-    }
-
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        const ellipsis2 = document.createElement('span');
-        ellipsis2.textContent = '...';
-        ellipsis2.classList.add('ellipsis-span');
-        paginationContainer.appendChild(ellipsis2);
-      }
-
-      const lastPage = Math.min(endPage + increment, totalPages);
-
-      const lastPageButton = document.createElement('button');
-      lastPageButton.style.cursor = 'pointer';
-      lastPageButton.textContent = lastPage;
-      lastPageButton.classList.add('page-button');
-      lastPageButton.addEventListener('click', () => {
-        loadMoviesPage(lastPage);
-      });
-      paginationContainer.appendChild(lastPageButton);
-    }
+    const lastPage = Math.min(endPage + increment, totalPages);
 
     const lastPageButton = document.createElement('button');
-    lastPageButton.innerHTML = `
+    lastPageButton.style.cursor = 'pointer';
+    lastPageButton.textContent = lastPage;
+    lastPageButton.classList.add('page-button');
+    lastPageButton.addEventListener('click', () => {
+      loadMoviesPage(lastPage);
+    });
+    paginationContainer.appendChild(lastPageButton);
+  }
+
+  const lastPageButton = document.createElement('button');
+  lastPageButton.innerHTML = `
       <svg class="icon icon-arrow-right" viewBox="0 0 32 32" width="18" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.667" d="M6.667 16h18.667M16 25.333l9.333-9.333-9.333-9.333" style="stroke:var(--color2, #000)"/>
       </svg>
   `;
-    lastPageButton.classList.add('page-button', 'last-button');
-    lastPageButton.style.cursor = 'pointer';
-    lastPageButton.addEventListener('click', () => {
-      const nextPage = Math.min(currentPage + 1, totalPages);
-      loadMoviesPage(nextPage);
-      toggleNotification(false);
-    });
+  lastPageButton.classList.add('page-button', 'last-button');
+  lastPageButton.style.cursor = 'pointer';
+  lastPageButton.addEventListener('click', () => {
+    const nextPage = Math.min(currentPage + 1, totalPages);
+    loadMoviesPage(nextPage);
+    toggleNotification(false);
+  });
 
-    paginationContainer.appendChild(lastPageButton);
-  }
+  paginationContainer.appendChild(lastPageButton);
+}
 }
 
 //WYSZUKIWANIE FILMOW//
@@ -387,3 +392,5 @@ if (searchForm) {
     handleSearch(keyword, 1);
   });
 }
+
+
