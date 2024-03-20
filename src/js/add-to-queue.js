@@ -1,26 +1,66 @@
-const addToQueueBtn = document.querySelector('.queue-button');
+const queueButton = document.querySelector('.queue-button');
 const modal = document.querySelector('.movie-modal');
 
-addToQueueBtn.addEventListener('click', () => {
+
+window.addEventListener('load', () => {
+  const movie = getMovieDataFromSessionStorage();
+  if (movie && isMovieInQueue(movie)) {
+    queueButton.textContent = 'Remove from Queue'; // jesli film po zaladowaniu strony jest w watched niech zostaje napis remove from queue
+    queueButton.removeEventListener('click', addToQueueHandler);
+    queueButton.addEventListener('click', removeFromQueueHandler);
+  }
+});
+
+queueButton.addEventListener('click', () => {
   const movie = getMovieDataFromSessionStorage();
   if (movie) {
-    if (!isMovieInQueue(movie)) { // Jesli film nie jest w kolejce, Bartosz K
+    if (!isMovieInQueue(movie)) {
       addToQueue(movie);
       console.log('Movie added to queue.', movie);
-      displayNotification('Movie added to queue.'); // wyswietla dodatkowy komunikat
+      displayNotification('Movie added to queue.');
+      queueButton.textContent = 'Remove from Queue';
+      queueButton.removeEventListener('click', addToQueueHandler);
+      queueButton.addEventListener('click', removeFromQueueHandler);
     } else {
-      console.log('This movie is already in the queue.');
-      displayNotification('This movie is already in the queue.');
-    }
-    if (isMovieInWatchedList(movie)) { // Sprawdzenie, czy film jest dodany w obejrzanych Bartosz K
-      removeFromWatched(movie); // Usunięcie filmu z listy obejrzanych, Bartosz K
-      console.log('Movie removed from watched list.', movie);
-      
+      removeFromQueue(movie);
+      console.log('Movie removed from queue.', movie);
+      displayNotification('Movie removed from queue.');
+      queueButton.textContent = 'Add to Queue';
+      queueButton.removeEventListener('click', removeFromQueueHandler);
+      queueButton.addEventListener('click', addToQueueHandler);
     }
   } else {
     console.log('No movie data found in session storage.');
   }
 });
+
+function addToQueueHandler() {
+  const movie = getMovieDataFromSessionStorage();
+  if (movie) {
+    addToQueue(movie);
+    console.log('Movie added to queue.', movie);
+    displayNotification('Movie added to queue.');
+    queueButton.textContent = 'Remove from Queue';
+    queueButton.removeEventListener('click', addToQueueHandler);
+    queueButton.addEventListener('click', removeFromQueueHandler);
+  } else {
+    console.log('No movie data found in session storage.');
+  }
+}
+
+function removeFromQueueHandler() {
+  const movie = getMovieDataFromSessionStorage();
+  if (movie) {
+    removeFromQueue(movie);
+    console.log('Movie removed from queue.', movie);
+    displayNotification('Movie removed from queue.');
+    queueButton.textContent = 'Add to Queue';
+    queueButton.removeEventListener('click', removeFromQueueHandler);
+    queueButton.addEventListener('click', addToQueueHandler);
+  } else {
+    console.log('No movie data found in session storage.');
+  }
+}
 
 function getMovieDataFromSessionStorage() {
   const sessionKey = 'currentMovie';
@@ -36,18 +76,7 @@ function addToQueue(movie) {
 
 function isMovieInQueue(movie) {
   let moviesOnQueue = JSON.parse(localStorage.getItem('queue')) || [];
-  return moviesOnQueue.some(item => item.id === movie.id); 
-}
-
-function isMovieInWatchedList(movie) {
-  let moviesOnWatched = JSON.parse(localStorage.getItem('watched')) || [];
-  return moviesOnWatched.some(item => item.id === movie.id); 
-}
-
-function removeFromWatched(movie) {
-  let moviesOnWatched = JSON.parse(localStorage.getItem('watched')) || [];
-  let updatedWatchedList = moviesOnWatched.filter(item => item.id !== movie.id);
-  localStorage.setItem('watched', JSON.stringify(updatedWatchedList));
+  return moviesOnQueue.some(item => item.id === movie.id);
 }
 
 function removeFromQueue(movie) {
@@ -56,8 +85,6 @@ function removeFromQueue(movie) {
   localStorage.setItem('queue', JSON.stringify(updatedQueueList));
 }
 
-//wyswietl wiadomosc 
-
 function displayNotification(message) {
   const notification = document.createElement('div');
   notification.classList.add('notification');
@@ -65,27 +92,5 @@ function displayNotification(message) {
   document.body.appendChild(notification);
   setTimeout(() => {
     notification.remove();
-  }, 3000); 
+  }, 3000);
 }
-
-
-//przycisk do usuwania filmow z queue
-
-const removeQueueBtn = document.querySelector('.remove-queue-button');
-
-removeQueueBtn.addEventListener('click', () => {
-  const movie = getMovieDataFromSessionStorage();
-  if (movie) {
-    if (isMovieInQueue(movie)) {
-      removeFromQueue(movie);
-      console.log('Movie removed from queue:', movie);
-      displayNotification('Movie removed from queue.');
-    } else {
-      console.log('This movie is not in the queue.');
-      displayNotification('This movie is not in the queue.');
-    }
-  } else {
-    console.log('No movie data found in session storage.');
-  }
-});
-

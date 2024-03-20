@@ -119,8 +119,8 @@ async function loadMoviesPage(page) {
   if (!currentSearchKeyword) {
     //jeśli nie istnieje wyszukiwana fraza
     if (window.location.pathname === '/my-library.html') {
-      const movies = [];
-      displayMovies(movies);//w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
+      const movies = []; //w my-library nie laduj popularnych filmow (nie nadpisuje wtedy filmow watched i queue), Bartosz K
+      displayMovies(movies);
       scrollToTop();
     } else {
       const { movies, totalPages } = await getPopularMovies(page); //to ładuj popularne filmy, Bartosz K

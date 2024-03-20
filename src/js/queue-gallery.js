@@ -142,3 +142,4 @@ function renderPagination(totalPages, currentPage) {
 }
 
 loadMoviesPage(currentPage);
+
