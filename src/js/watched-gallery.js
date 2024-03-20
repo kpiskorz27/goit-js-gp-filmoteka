@@ -39,21 +39,14 @@ function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
 
-  const maxVisiblePages = 5;
-  const maxButtonsToShow = 1000;
-  const increment = 15;
+  const visiblePages = 5;
 
-  let startPage = Math.max(currentPage - Math.floor(maxVisiblePages / 2), 1);
-  let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+  let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
+  let endPage = Math.min(totalPages, startPage + visiblePages - 1);
 
-  if (totalPages > maxVisiblePages) {
-    if (currentPage <= Math.ceil(maxVisiblePages / 2)) {
-      startPage = 1;
-      endPage = maxVisiblePages;
-    } else if (currentPage >= totalPages - Math.floor(maxVisiblePages / 2)) {
-      startPage = totalPages - maxVisiblePages + 1;
-      endPage = totalPages;
-    }
+  if (endPage - startPage + 1 < visiblePages) {
+    endPage = Math.min(totalPages, currentPage + Math.floor(visiblePages / 2));
+    startPage = Math.max(1, endPage - visiblePages + 1);
   }
 
   const firstPageButton = document.createElement('button');
@@ -71,24 +64,6 @@ function renderPagination(totalPages, currentPage) {
   });
   paginationContainer.appendChild(firstPageButton);
 
-  if (startPage > 1) {
-    const firstPage = document.createElement('button');
-    firstPage.textContent = 1;
-    firstPage.style.cursor = 'pointer';
-    firstPage.classList.add('page-button');
-    firstPage.addEventListener('click', () => {
-      loadMoviesPage(1);
-    });
-    paginationContainer.appendChild(firstPage);
-
-    if (startPage > 2) {
-      const ellipsis1 = document.createElement('span');
-      ellipsis1.textContent = '...';
-      ellipsis1.classList.add('ellipsis-span');
-      paginationContainer.appendChild(ellipsis1);
-    }
-  }
-
   for (let page = startPage; page <= endPage; page++) {
     const pageButton = document.createElement('button');
     pageButton.textContent = page;
@@ -102,27 +77,6 @@ function renderPagination(totalPages, currentPage) {
       window.scroll({ top: 0, behavior: 'smooth' });
     });
     paginationContainer.appendChild(pageButton);
-  }
-
-  if (endPage < totalPages) {
-    if (endPage < totalPages - 1) {
-      const ellipsis2 = document.createElement('span');
-      ellipsis2.textContent = '...';
-      ellipsis2.classList.add('ellipsis-span');
-      paginationContainer.appendChild(ellipsis2);
-    }
-
-    const lastPage = Math.min(endPage + increment, totalPages);
-
-    const lastPageButton = document.createElement('button');
-    lastPageButton.style.cursor = 'pointer';
-    lastPageButton.textContent = lastPage;
-    lastPageButton.classList.add('page-button');
-    lastPageButton.addEventListener('click', () => {
-      loadMoviesPage(lastPage);
-      window.scroll({ top: 0, behavior: 'smooth' });
-    });
-    paginationContainer.appendChild(lastPageButton);
   }
 
   const lastPageButton = document.createElement('button');
@@ -141,5 +95,6 @@ function renderPagination(totalPages, currentPage) {
 
   paginationContainer.appendChild(lastPageButton);
 }
+
 
 loadMoviesPage(currentPage);
