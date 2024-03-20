@@ -156,7 +156,7 @@ export function renderPagination(totalPages, currentPage) {
 
   if (isMobile) { 
     let startPage = currentPage > 2 ? currentPage - 2 : 1;
-    const endPage = Math.min(startPage + 4, totalPages); // maksymalnie ma wyswietlac sie tylko 5 przyciskow, Bartosz K
+    let endPage = Math.min(startPage + 4, totalPages); // maksymalnie ma wyswietlac sie tylko 5 przyciskow, Bartosz K
 
     if (totalPages <= 5) {
       endPage = totalPages;
