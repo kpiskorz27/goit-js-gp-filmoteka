@@ -1,4 +1,4 @@
-queueButton = document.querySelector('.queue-button');
+const queueButton = document.querySelector('.queue-button');
 
 window.addEventListener('load', () => {
   const movie = getMovieDataFromSessionStorage();
@@ -11,9 +11,14 @@ queueButton.addEventListener('click', () => {
   const movie = getMovieDataFromSessionStorage();
   if (movie) {
     if (!isMovieInQueue(movie)) {
-      addToQueue(movie);
-      console.log('Movie added to queue.', movie);
-      displayNotification('Movie added to queue.');
+      if (!isMovieInWatchedList(movie)) { 
+        addToQueue(movie);
+        console.log('Movie added to queue.', movie);
+        displayNotification('Movie added to queue.');
+      } else {
+        console.log('Movie already in watched list. Cannot add to queue.');
+        displayNotification('Movie already in watched list. Cannot add to queue.');
+      }
     } else {
       removeFromQueue(movie);
       console.log('Movie removed from queue.', movie);
@@ -24,6 +29,11 @@ queueButton.addEventListener('click', () => {
     console.log('No movie data found in session storage.');
   }
 });
+
+function isMovieInWatchedList(movie) {
+  let moviesOnWatched = JSON.parse(localStorage.getItem('watched')) || [];
+  return moviesOnWatched.some(item => item.id === movie.id); 
+}
 
 function updateQueueButton(movie) {
   const isInQueue = isMovieInQueue(movie);
