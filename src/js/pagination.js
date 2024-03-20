@@ -149,7 +149,6 @@ window.addEventListener('load', main);
 export function renderPagination(totalPages, currentPage) {
   const paginationContainer = document.querySelector('.pagination');
   paginationContainer.innerHTML = '';
-
   const isMobile = window.innerWidth < 768; // paginacja dla strony mobilnejm, Bartosz K
 
   if (isMobile) {
