@@ -1,9 +1,12 @@
 import { getMovieDetails } from './pagination';
+
 const movieModal = document.querySelector('.movie-modal');
 const overlay = document.querySelector('.movie-backdrop');
 const closeBtn = document.querySelector('.modal-close-btn');
 const modalImg = document.querySelector('.movie-image');
 const loaderModal = document.querySelector('.loader_modal_container');
+const queueButton = document.querySelector('.queue-button');
+
 async function openModal(event) {
   event.preventDefault();
   setTimeout(() => {
@@ -13,30 +16,34 @@ async function openModal(event) {
   }, 500);
   closeBtn.addEventListener('click', closeModal);
 }
+
 function closeModal(event) {
   event.preventDefault();
   overlay.classList.add('is-hidden');
   movieModal.classList.add('is-hidden');
   removeEventListeners();
 }
+
 function escExit(event) {
   const escKey = 'Escape';
   if (event.code === escKey) {
     closeModal(event);
   }
 }
+
 function removeEventListeners() {
   document.removeEventListener('keydown', escExit);
   overlay.removeEventListener('click', closeModal);
   closeBtn.removeEventListener('click', closeModal);
 }
+
 document.addEventListener('click', function (event) {
   const target = event.target;
-
   if (target.classList.contains('movie-backdrop')) {
     closeModal(event);
   }
 });
+
 window.addEventListener('keydown', escExit);
 
 function cardSelection() {
@@ -44,8 +51,8 @@ function cardSelection() {
   console.log('All Movies:', allMovies); // Log allMovies array
 
   if (allMovies.length) {
-    allMovies.forEach(oneMovie => {
-      oneMovie.addEventListener('click', function (event) {
+    allMovies.forEach(movie => {
+      movie.addEventListener('click', function (event) {
         const target = event.target.closest('.movie-item');
         console.log('Target:', target); // Log target element
 
@@ -59,6 +66,15 @@ function cardSelection() {
           modalImg.setAttribute('src', cardPoster);
           getMovieDetails(movieId).then(movie => {
             console.log('Movie Details:', movie); // Log movie details
+
+            const isInQueue = isMovieInQueue(movie);
+
+            if (isInQueue) {
+              queueButton.textContent = 'Remove from Queue';
+            } else {
+              queueButton.textContent = 'Add to Queue';
+            }
+
             saveMovieToSessionStorage(movie); // zapisuje film do sesji, Bartosz K
             movieModalData(movie);
             openModal(event);
@@ -98,8 +114,13 @@ function movieModalData(movie) {
   movieAbout.textContent = movie.overview;
 }
 
-function saveMovieToSessionStorage(movie) {
-  // film zapisywany jest do session storage, Bartosz K
+function saveMovieToSessionStorage(movie) { // film zapisywany jest do session storage, Bartosz K
   const sessionKey = 'currentMovie';
   sessionStorage.setItem(sessionKey, JSON.stringify(movie));
+}
+
+// sprawdza czy film jest w queue
+function isMovieInQueue(movie) {
+  let moviesOnQueue = JSON.parse(localStorage.getItem('queue')) || [];
+  return moviesOnQueue.some(item => item.id === movie.id);
 }

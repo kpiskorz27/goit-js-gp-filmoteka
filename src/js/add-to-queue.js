@@ -1,13 +1,9 @@
 const queueButton = document.querySelector('.queue-button');
-const modal = document.querySelector('.movie-modal');
-
 
 window.addEventListener('load', () => {
   const movie = getMovieDataFromSessionStorage();
-  if (movie && isMovieInQueue(movie)) {
-    queueButton.textContent = 'Remove from Queue'; // jesli film po zaladowaniu strony jest w watched niech zostaje napis remove from queue
-    queueButton.removeEventListener('click', addToQueueHandler);
-    queueButton.addEventListener('click', removeFromQueueHandler);
+  if (movie) {
+    updateQueueButton(movie);
   }
 });
 
@@ -18,47 +14,23 @@ queueButton.addEventListener('click', () => {
       addToQueue(movie);
       console.log('Movie added to queue.', movie);
       displayNotification('Movie added to queue.');
-      queueButton.textContent = 'Remove from Queue';
-      queueButton.removeEventListener('click', addToQueueHandler);
-      queueButton.addEventListener('click', removeFromQueueHandler);
     } else {
       removeFromQueue(movie);
       console.log('Movie removed from queue.', movie);
       displayNotification('Movie removed from queue.');
-      queueButton.textContent = 'Add to Queue';
-      queueButton.removeEventListener('click', removeFromQueueHandler);
-      queueButton.addEventListener('click', addToQueueHandler);
     }
+    updateQueueButton(movie);
   } else {
     console.log('No movie data found in session storage.');
   }
 });
 
-function addToQueueHandler() {
-  const movie = getMovieDataFromSessionStorage();
-  if (movie) {
-    addToQueue(movie);
-    console.log('Movie added to queue.', movie);
-    displayNotification('Movie added to queue.');
+function updateQueueButton(movie) {
+  const isInQueue = isMovieInQueue(movie);
+  if (isInQueue) {
     queueButton.textContent = 'Remove from Queue';
-    queueButton.removeEventListener('click', addToQueueHandler);
-    queueButton.addEventListener('click', removeFromQueueHandler);
   } else {
-    console.log('No movie data found in session storage.');
-  }
-}
-
-function removeFromQueueHandler() {
-  const movie = getMovieDataFromSessionStorage();
-  if (movie) {
-    removeFromQueue(movie);
-    console.log('Movie removed from queue.', movie);
-    displayNotification('Movie removed from queue.');
     queueButton.textContent = 'Add to Queue';
-    queueButton.removeEventListener('click', removeFromQueueHandler);
-    queueButton.addEventListener('click', addToQueueHandler);
-  } else {
-    console.log('No movie data found in session storage.');
   }
 }
 
