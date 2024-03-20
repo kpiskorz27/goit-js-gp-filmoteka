@@ -392,3 +392,5 @@ if (searchForm) {
     handleSearch(keyword, 1);
   });
 }
+
+

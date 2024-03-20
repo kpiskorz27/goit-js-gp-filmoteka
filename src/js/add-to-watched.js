@@ -1,63 +1,36 @@
-const addToWatchedBtn = document.querySelector('.watched-button');
-
+const watchedButton = document.querySelector('.watched-button');
 
 window.addEventListener('load', () => {
   const movie = getMovieDataFromSessionStorage();
   if (movie && isMovieInWatchedList(movie)) {
-    addToWatchedBtn.textContent = 'Remove from Watched'; // jesli film po zaladowaniu strony jest w watched niech zostaje napis remove from watched
-    addToWatchedBtn.removeEventListener('click', addToWatchedHandler);
-    addToWatchedBtn.addEventListener('click', removeFromWatchedHandler);
+    updateWatchedButton(movie);
   }
 });
 
-addToWatchedBtn.addEventListener('click', () => {
+watchedButton.addEventListener('click', () => {
   const movie = getMovieDataFromSessionStorage();
   if (movie) {
     if (!isMovieInWatchedList(movie)) {
       addToWatched(movie);
       console.log('Movie added to watched list.', movie);
       displayNotification('Movie added to watched list.');
-      addToWatchedBtn.textContent = 'Remove from Watched';
-      addToWatchedBtn.removeEventListener('click', addToWatchedHandler);
-      addToWatchedBtn.addEventListener('click', removeFromWatchedHandler);
     } else {
       removeFromWatched(movie);
       console.log('Movie removed from watched list.', movie);
       displayNotification('Movie removed from watched list.');
-      addToWatchedBtn.textContent = 'Add to Watched';
-      addToWatchedBtn.removeEventListener('click', removeFromWatchedHandler);
-      addToWatchedBtn.addEventListener('click', addToWatchedHandler);
     }
+    updateWatchedButton(movie);
   } else {
     console.log('No movie data found in session storage.');
   }
 });
 
-function addToWatchedHandler() {
-  const movie = getMovieDataFromSessionStorage();
-  if (movie) {
-    addToWatched(movie);
-    console.log('Movie added to watched list.', movie);
-    displayNotification('Movie added to watched list.');
-    addToWatchedBtn.textContent = 'Remove from Watched';
-    addToWatchedBtn.removeEventListener('click', addToWatchedHandler);
-    addToWatchedBtn.addEventListener('click', removeFromWatchedHandler);
+function updateWatchedButton(movie) {
+  const isInWatched = isMovieInWatchedList(movie);
+  if (isInWatched) {
+    watchedButton.textContent = 'Remove from Watched';
   } else {
-    console.log('No movie data found in session storage.');
-  }
-}
-
-function removeFromWatchedHandler() {
-  const movie = getMovieDataFromSessionStorage();
-  if (movie) {
-    removeFromWatched(movie);
-    console.log('Movie removed from watched list.', movie);
-    displayNotification('Movie removed from watched list.');
-    addToWatchedBtn.textContent = 'Add to Watched';
-    addToWatchedBtn.removeEventListener('click', removeFromWatchedHandler);
-    addToWatchedBtn.addEventListener('click', addToWatchedHandler);
-  } else {
-    console.log('No movie data found in session storage.');
+    watchedButton.textContent = 'Add to Watched';
   }
 }
 

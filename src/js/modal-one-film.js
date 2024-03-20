@@ -6,6 +6,7 @@ const closeBtn = document.querySelector('.modal-close-btn');
 const modalImg = document.querySelector('.movie-image');
 const loaderModal = document.querySelector('.loader_modal_container');
 const queueButton = document.querySelector('.queue-button');
+const watchedButton = document.querySelector('.watched-button'); 
 
 async function openModal(event) {
   event.preventDefault();
@@ -75,6 +76,13 @@ function cardSelection() {
               queueButton.textContent = 'Add to Queue';
             }
 
+            const isInWatched = isMovieInWatchedList(movie);
+            if (isInWatched) {
+              watchedButton.textContent = 'Remove from Watched';
+            } else {
+              watchedButton.textContent = 'Add to Watched';
+            }
+
             saveMovieToSessionStorage(movie); // zapisuje film do sesji, Bartosz K
             movieModalData(movie);
             openModal(event);
@@ -114,13 +122,17 @@ function movieModalData(movie) {
   movieAbout.textContent = movie.overview;
 }
 
-function saveMovieToSessionStorage(movie) { // film zapisywany jest do session storage, Bartosz K
+function saveMovieToSessionStorage(movie) { 
   const sessionKey = 'currentMovie';
   sessionStorage.setItem(sessionKey, JSON.stringify(movie));
 }
 
-// sprawdza czy film jest w queue
 function isMovieInQueue(movie) {
   let moviesOnQueue = JSON.parse(localStorage.getItem('queue')) || [];
   return moviesOnQueue.some(item => item.id === movie.id);
+}
+
+function isMovieInWatchedList(movie) {
+  let moviesOnWatched = JSON.parse(localStorage.getItem('watched')) || [];
+  return moviesOnWatched.some(item => item.id === movie.id);
 }

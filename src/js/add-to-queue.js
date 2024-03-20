@@ -1,4 +1,4 @@
-const queueButton = document.querySelector('.queue-button');
+queueButton = document.querySelector('.queue-button');
 
 window.addEventListener('load', () => {
   const movie = getMovieDataFromSessionStorage();
