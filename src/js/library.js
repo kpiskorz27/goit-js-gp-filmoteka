@@ -1,11 +1,11 @@
 const movieContainer = document.querySelector('.film-list');
 const paginationContainer = document.querySelector('.pagination');
+const footer = document.querySelector('footer');
 import imageOne from '../assets/no-poster-available.jpg'; //import zdjecia z assets
-
+const loader = document.querySelector('.loader');
 let allMovies = [];
-window.addEventListener('load', async () => {
-  
 
+window.addEventListener('load', async () => {
   if (JSON.parse(localStorage.getItem('queue')) || JSON.parse(localStorage.getItem('watched'))) {
     const movieOnQueue = await loadFromLibrary('queue');
     const movieOnWatched = await loadFromLibrary('watched');
@@ -34,24 +34,31 @@ export function renderMovieCard(movieData) {
     movieContainer.innerHTML = 'Sorry, there are no films in your LIBRARY.';
     return;
   }
-  const moviesToRender = movieData.slice(0, 9);
-  const markup = moviesToRender
-    .map(movie => {
-      const genres = movie.genres || []; // czy gatunki są zdefiniowane
-      let genresText;
+  loader.classList.remove('hidden');
+  footer.classList.add('hidden');
+  paginationContainer.classList.add('hidden');
 
-      if (genres.length > 2) {
-        genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${
-          genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name
-        }, Others`;
-      } else {
-        genresText = genres
-          .map(genre => (genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name))
-          .join(', ');
-      }
+  setTimeout(() => {
+    const moviesToRender = movieData.slice(0, 9);
+    const markup = moviesToRender
+      .map(movie => {
+        const genres = movie.genres || []; // czy gatunki są zdefiniowane
+        let genresText;
 
-      return `<div class="movie-item" data-modal-open data-id="${movie.id}"> 
-      <img src="${movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : imageOne}" alt="${movie.title}" loading="lazy" /> 
+        if (genres.length > 2) {
+          genresText = `${genres[0].name === 'Science Fiction' ? 'Sci-Fi' : genres[0].name}, ${
+            genres[1].name === 'Science Fiction' ? 'Sci-Fi' : genres[1].name
+          }, Others`;
+        } else {
+          genresText = genres
+            .map(genre => (genre.name === 'Science Fiction' ? 'Sci-Fi' : genre.name))
+            .join(', ');
+        }
+
+        return `<div class="movie-item" data-modal-open data-id="${movie.id}"> 
+      <img src="${
+        movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : imageOne
+      }" alt="${movie.title}" loading="lazy" /> 
       <h2>${movie.title}</h2>
       <div class="content-wrapper">
           <p>${genresText}</p>
@@ -59,16 +66,20 @@ export function renderMovieCard(movieData) {
           <p class="main-rating">${movie.vote_average.toFixed(1)}</p>
       </div>
   </div>`;
-    })
-    .join(''); // tutaj tez niech dodaje imageOne jesli nie ma okladki, Bartosz K
+      })
+      .join(''); // tutaj tez niech dodaje imageOne jesli nie ma okladki, Bartosz K
 
-  movieContainer.innerHTML = markup;
+    movieContainer.innerHTML = markup;
+    loader.classList.add('hidden');
+    footer.classList.remove('hidden');
+    paginationContainer.classList.remove('hidden');
+  }, 500);
 }
 
 //Renderowanie paginacji dla library//
 
 function renderPagination(totalItems, currentPage) {
-  const itemsPerPage = 10; 
+  const itemsPerPage = 10;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   paginationContainer.innerHTML = '';
