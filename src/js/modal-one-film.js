@@ -6,7 +6,7 @@ const closeBtn = document.querySelector('.modal-close-btn');
 const modalImg = document.querySelector('.movie-image');
 const loaderModal = document.querySelector('.loader_modal_container');
 const queueButton = document.querySelector('.queue-button');
-const watchedButton = document.querySelector('.watched-button'); 
+const watchedButton = document.querySelector('.watched-button');
 
 async function openModal(event) {
   event.preventDefault();
@@ -14,7 +14,7 @@ async function openModal(event) {
     overlay.classList.remove('is-hidden');
     movieModal.classList.remove('is-hidden');
     loaderModal.classList.remove('hidden');
-  }, 500);
+  }, 100);
   closeBtn.addEventListener('click', closeModal);
 }
 
@@ -122,7 +122,7 @@ function movieModalData(movie) {
   movieAbout.textContent = movie.overview;
 }
 
-function saveMovieToSessionStorage(movie) { 
+function saveMovieToSessionStorage(movie) {
   const sessionKey = 'currentMovie';
   sessionStorage.setItem(sessionKey, JSON.stringify(movie));
 }
