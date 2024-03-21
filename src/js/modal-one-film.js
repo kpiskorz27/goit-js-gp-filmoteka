@@ -88,7 +88,7 @@ function cardSelection() {
             openModal(event);
             setTimeout(() => {
               loaderModal.classList.add('hidden');
-            }, 1000);
+            }, 500);
           });
         }
       });
