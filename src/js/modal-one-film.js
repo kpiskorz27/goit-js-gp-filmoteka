@@ -14,7 +14,7 @@ async function openModal(event) {
     overlay.classList.remove('is-hidden');
     movieModal.classList.remove('is-hidden');
     loaderModal.classList.remove('hidden');
-  }, 500);
+  }, 100);
   closeBtn.addEventListener('click', closeModal);
 }
 
